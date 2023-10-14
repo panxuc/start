@@ -98,6 +98,11 @@ body {
     text-decoration: none;
 }
 
+.navbar a:hover {
+    color: #d93379;
+    text-decoration: underline;
+}
+
 .index {
     color: #000;
     font-size: 14px;
