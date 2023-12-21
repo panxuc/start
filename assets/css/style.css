@@ -39,7 +39,7 @@ body {
     text-align: center;
 }
 
-.search input {
+.search input[type="search"] {
     width: 560px;
     height: 32px;
     padding: 8px 12px;
