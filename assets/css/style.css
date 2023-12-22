@@ -36,7 +36,12 @@ body {
 
 .search {
     margin-bottom: 8px;
-    text-align: center;
+    text-align: right;
+    width: 80%;
+}
+
+.search label {
+    color: #000;
 }
 
 .search input[type="search"] {

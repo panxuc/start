@@ -19,8 +19,9 @@
     <link rel="icon" href="assets/img/icon.png" type="image/x-icon">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     <link rel="stylesheet" href="assets/css/style.css">
-    <script async src="https://analytics.panxuc.com/script.js"
-        data-website-id="a853dab6-8e8d-4c85-95c2-0d48bb54e7e7"></script>
+    <script src="assets/js/bing.js"></script>
+    <!-- <script async src="https://analytics.panxuc.com/script.js"
+        data-website-id="a853dab6-8e8d-4c85-95c2-0d48bb54e7e7"></script> -->
 </head>
 
 <body>
@@ -38,6 +39,14 @@
         <form action="https://www.baidu.com/s" method="get">
             <input type="search" name="wd" placeholder="百度">
             <button type="submit">百度</button>
+        </form>
+        <form id="bingSearchForm" method="get">
+            <input type="radio" name="bingType" id="en" value="en" onchange="setBingSearch()" checked>
+            <label for="en">国际</label>
+            <input type="radio" name="bingType" id="cn" value="cn" onchange="setBingSearch()">
+            <label for="cn">国内</label>
+            <input type="search" name="q" placeholder="必应">
+            <button type="submit">必应</button>
         </form>
     </div>
     <div class="navbar">
@@ -490,5 +499,9 @@
         <p>Copyright © 2023 Xuc Pan. All Rights Reserved.</p>
     </div>
 </body>
+
+<script>
+    setBingSearch();
+</script>
 
 </html>
