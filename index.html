@@ -598,12 +598,13 @@
         </table>
     </div>
     <div class="footer">
-        <p>Copyright © 2023 Xuc Pan. All Rights Reserved.</p>
+        <p id="copyright">Copyright © 2023 Xuc Pan. All Rights Reserved.</p>
     </div>
 </body>
 
 <script>
     setBingSearch();
+    document.getElementById("copyright").innerHTML = `Copyright © 2023-${new Date().getFullYear()} Xuc Pan. All Rights Reserved.`;
 </script>
 
 </html>
