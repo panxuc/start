@@ -5,7 +5,7 @@ export default function Navigator() {
   const [selectedCategory, setSelectedCategory] = useState("清华");
   return (
     <>
-      <div className="flex flex-wrap gap-4 mb-8">
+      <div className="flex flex-wrap justify-center items-center gap-4 mb-8">
         {Object.keys(Categories).map((category) => (
           <button
             key={category}
@@ -20,7 +20,7 @@ export default function Navigator() {
         ))}
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 w-full max-w-5xl">
+      <div className="flex flex-wrap justify-center items-center gap-4 w-full max-w-5xl">
         {selectedCategory &&
           Categories[selectedCategory as keyof typeof Categories].map((site) => (
             <a

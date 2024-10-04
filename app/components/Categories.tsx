@@ -45,9 +45,9 @@ const Categories = {
     { name: "菜鸟教程", url: "https://www.runoob.com/", desc: "" },
     { name: "W3School", url: "https://www.w3school.com.cn/", desc: "" },
     { name: "FreeCode", url: "https://www.freecodecamp.org/chinese/", desc: "" },
-    { name: "MSLearn", url: "https://learn.microsoft.com/zh-cn/", desc: "" },
+    { name: "Microsoft Learn", url: "https://learn.microsoft.com/zh-cn/", desc: "" },
     { name: "pwn.college", url: "https://pwn.college/", desc: "" },
-    { name: "CTFAIO", url: "https://firmianay.gitbook.io/ctf-all-in-one/", desc: "" },
+    { name: "CTF All In One", url: "https://firmianay.gitbook.io/ctf-all-in-one/", desc: "" },
     { name: "HelloCTF", url: "https://hello-ctf.com/", desc: "" },
   ],
   "文档": [

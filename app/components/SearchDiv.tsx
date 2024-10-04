@@ -2,7 +2,7 @@ import SearchForm from "./SearchForm";
 
 export default function SearchDiv() {
   return (
-    <div className="flex items-center gap-4 mb-8">
+    <div className="flex flex-wrap justify-center items-center gap-4 mb-8">
       <SearchForm
         actionUrl="https://www.google.com/search"
         inputName="q"
