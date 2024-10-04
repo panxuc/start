@@ -5,7 +5,7 @@ export default function TabSwitcher() {
   const [selectedTab, setSelectedTab] = useState("网址导航");
   return (
     <>
-      <div className="flex gap-4 mb-8">
+      {/* <div className="flex gap-4 mb-8">
         {Object.keys(Tabs).map((tab) => (
           <button
             key={tab}
@@ -18,9 +18,9 @@ export default function TabSwitcher() {
             {tab}
           </button>
         ))}
-      </div>
+      </div> */}
 
-      <div className="p-4 bg-white rounded-lg">
+      <div className="p-2 bg-white rounded-lg">
         <div
           className="transition-opacity duration-500 ease-in-out opacity-90"
           key={selectedTab}
