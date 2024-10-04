@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import categories from './categories';
+import Categories from './components/Categories';
+import SearchForm from "./components/SearchForm";
 
 export default function Home() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>("清华");
@@ -13,28 +14,22 @@ export default function Home() {
       </div>
 
       <div className="flex flex-wrap gap-4 mb-8">
-        <form action="https://www.google.com/search" method="get" target="_blank" className="flex items-center gap-2">
-          <input
-            type="text"
-            name="q"
-            placeholder="Google 搜索"
-            className="px-4 py-2 border border-gray-300 rounded-lg"
-          />
-          <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded-lg">搜索</button>
-        </form>
-        <form action="https://www.baidu.com/s" method="get" target="_blank" className="flex items-center gap-2">
-          <input
-            type="text"
-            name="wd"
-            placeholder="百度搜索"
-            className="px-4 py-2 border border-gray-300 rounded-lg"
-          />
-          <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded-lg">搜索</button>
-        </form>
+        <SearchForm
+          actionUrl="https://www.google.com/search"
+          inputName="q"
+          placeholder="Google 搜索"
+          buttonLabel="搜索"
+        />
+        <SearchForm
+          actionUrl="https://www.baidu.com/s"
+          inputName="wd"
+          placeholder="百度搜索"
+          buttonLabel="搜索"
+        />
       </div>
 
       <div className="flex flex-wrap gap-4 mb-8">
-        {Object.keys(categories).map((category) => (
+        {Object.keys(Categories).map((category) => (
           <button
             key={category}
             onClick={() => setSelectedCategory(category)}
@@ -50,7 +45,7 @@ export default function Home() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 w-full max-w-5xl">
         {selectedCategory &&
-          categories[selectedCategory as keyof typeof categories].map((site) => (
+          Categories[selectedCategory as keyof typeof Categories].map((site) => (
             <a
               key={site.name}
               href={site.url}

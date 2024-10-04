@@ -1,13 +1,13 @@
-import { url } from "inspector";
-
-const categories = {
+const Categories = {
   "清华": [
     { name: "清华官网", url: "https://www.tsinghua.edu.cn/", desc: "" },
     { name: "INFO", url: "http://info.tsinghua.edu.cn/", desc: "" },
     { name: "网络学堂", url: "https://learn.tsinghua.edu.cn/f/login", desc: "" },
+    { name: "WebVPN", url: "https://webvpn.tsinghua.edu.cn/login", desc: "" },
     { name: "中文选课", url: "http://zhjwxk.cic.tsinghua.edu.cn/xsxk_index.jsp", desc: "" },
     { name: "荷塘雨课堂", url: "https://pro.yuketang.cn/v2/web/index", desc: "" },
     { name: "图书馆", url: "https://lib.tsinghua.edu.cn/", desc: "" },
+    { name: "图书馆座位", url: "https://seat.lib.tsinghua.edu.cn/home/web/f_second", desc: "" },
     { name: "教参平台", url: "https://ereserves.lib.tsinghua.edu.cn/", desc: "" },
     { name: "清华邮箱", url: "https://mails.tsinghua.edu.cn/", desc: "" },
     { name: "清华云盘", url: "https://cloud.tsinghua.edu.cn/", desc: "" },
@@ -15,7 +15,10 @@ const categories = {
     { name: "清华信息化", url: "https://its.tsinghua.edu.cn/index.jsp", desc: "" },
     { name: "EESAST", url: "https://eesast.com/home", desc: "" },
     { name: "THU Services", url: "https://thu.services/", desc: "" },
-    { name: "新T树洞", url: "https://new-t.github.io/", desc: "" },],
+    { name: "新T树洞", url: "https://new-t.github.io/", desc: "" },
+    { name: "THU Info", url: "https://app.cs.tsinghua.edu.cn/", desc: "" },
+    { name: "learnX", url: "https://tsinghua.app/learnX", desc: "" },
+  ],
   "程序": [
     { name: "GitHub", url: "https://github.com/", desc: "" },
     { name: "StackOverflow", url: "https://stackoverflow.com/", desc: "" },
@@ -30,7 +33,7 @@ const categories = {
     { name: "Overleaf", url: "https://www.overleaf.com/", desc: "" },
     { name: "Z-Library", url: "https://zh.z-lib.gs/", desc: "" },
     { name: "Anna's Archive", url: "https://annas-archive.gs/", desc: "" },
-    { name: "知网", url: "https://www.cnki.net/", desc: "" },
+    { name: "中国知网", url: "https://www.cnki.net/", desc: "" },
     { name: "读秀", url: "https://www.duxiu.com/", desc: "" },
     { name: "Semantic Scholar", url: "https://www.semanticscholar.org/", desc: "" },
     { name: "AI Deadlines", url: "https://aideadlin.es/", desc: "" },
@@ -48,15 +51,18 @@ const categories = {
     { name: "HelloCTF", url: "https://hello-ctf.com/", desc: "" },
   ],
   "文档": [
-    { name: "Cpp Reference", url: "https://zh.cppreference.com/w/%E9%A6%96%E9%A1%B5", desc: "" },
-    { name: "Python Docs", url: "https://docs.python.org/zh-cn/3/", desc: "" },
-    { name: "NumPy Docs", url: "https://numpy.org/doc/stable/", desc: "" },
-    { name: "PyTorch Docs", url: "https://pytorch.org/docs/stable/index.html", desc: "" },
-    { name: "TensorFlow Docs", url: "https://www.tensorflow.org/api_docs", desc: "" },
-    { name: "Matplotlib Docs", url: "https://matplotlib.org/stable/index.html", desc: "" },
-    { name: "Pandas Docs", url: "https://pandas.pydata.org/docs/", desc: "" },
-    { name: "Hugging Face Docs", url: "https://huggingface.co/docs", desc: "" },
-    { name: "Unity", url: "https://docs.unity3d.com/Manual/index.html", desc: "" },
+    { name: "C++ Reference", url: "https://zh.cppreference.com/w/%E9%A6%96%E9%A1%B5", desc: "" },
+    { name: "Python Documentation", url: "https://docs.python.org/zh-cn/3/", desc: "" },
+    { name: "NumPy Documentation", url: "https://numpy.org/doc/stable/", desc: "" },
+    { name: "PyTorch Documentation", url: "https://pytorch.org/docs/stable/index.html", desc: "" },
+    { name: "TensorFlow Documentation", url: "https://www.tensorflow.org/api_docs", desc: "" },
+    { name: "Hugging Face Documentation", url: "https://huggingface.co/docs", desc: "" },
+    { name: "Matplotlib Documentation", url: "https://matplotlib.org/stable/index.html", desc: "" },
+    { name: "Pandas Documentation", url: "https://pandas.pydata.org/docs/", desc: "" },
+    { name: "React Learn", url: "https://react.dev/learn", desc: "" },
+    { name: "Next.js Docs", url: "https://nextjs.org/docs", desc: "" },
+    { name: "Tailwind CSS Docs", url: "https://tailwindcss.com/docs", desc: "" },
+    { name: "Unity Manual", url: "https://docs.unity3d.com/Manual/index.html", desc: "" },
     { name: "Godot Docs", url: "https://docs.godotengine.org/zh-cn/", desc: "" },
   ],
   "翻译": [
@@ -137,11 +143,11 @@ const categories = {
     { name: "ChatGPT", url: "https://chatgpt.com/", desc: "" },
     { name: "Claude", url: "https://claude.ai/", desc: "" },
     { name: "Kimi", url: "https://kimi.moonshot.cn/", desc: "" },
-    { name: "天工", url: "https://www.tiangong.cn/", desc: "" },
-    { name: "秘塔", url: "https://metaso.cn/", desc: "" },
-    { name: "文心", url: "https://yiyan.baidu.com/", desc: "" },
-    { name: "智谱", url: "https://chatglm.cn/main/detail", desc: "" },
-    { name: "通义", url: "https://tongyi.aliyun.com/qianwen/", desc: "" },
+    { name: "天工AI", url: "https://www.tiangong.cn/", desc: "" },
+    { name: "秘塔AI搜索", url: "https://metaso.cn/", desc: "" },
+    { name: "文心一言", url: "https://yiyan.baidu.com/", desc: "" },
+    { name: "智谱清言", url: "https://chatglm.cn/main/detail", desc: "" },
+    { name: "通义千问", url: "https://tongyi.aliyun.com/qianwen/", desc: "" },
   ],
   "云盘": [
     { name: "谷歌云盘", url: "https://drive.google.com/drive/", desc: "" },
@@ -183,6 +189,7 @@ const categories = {
     { name: "腾讯软件中心", url: "https://pc.qq.com/", desc: "" },
     { name: "吾爱破解", url: "https://www.52pojie.cn/", desc: "" },
     { name: "LRepacks", url: "https://lrepacks.net/", desc: "" },
+    { name: "Zotero中文社区", url: "https://zotero-chinese.com/", desc: "" },
   ],
   "镜像": [
     { name: "清华大学", url: "https://mirrors.tuna.tsinghua.edu.cn/", desc: "" },
@@ -208,6 +215,6 @@ const categories = {
   ]
 };
 
-// categories["全部"] = Object.values(categories).flatMap((category) => category) as { name: string; url: string; desc: string }[];
+// Categories["全部"] = Object.values(Categories).flatMap((category) => category) as { name: string; url: string; desc: string }[];
 
-export default categories;
+export default Categories;
