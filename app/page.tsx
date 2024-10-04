@@ -63,6 +63,8 @@ export default function Home() {
         Copyright © {new Date().getFullYear()} Xuc Pan. All Rights Reserved.
       </footer>
 
+      <script defer src="https://analytics.panxuc.com/script.js" data-website-id="a853dab6-8e8d-4c85-95c2-0d48bb54e7e7"></script>
+
     </main>
   );
 }
