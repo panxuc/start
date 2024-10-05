@@ -20,7 +20,7 @@ export default function Navigator() {
         ))}
       </div>
 
-      <div className="flex flex-wrap justify-center items-center gap-4 w-full max-w-5xl">
+      <div className="flex flex-wrap justify-center items-center gap-4 w-full">
         {selectedCategory &&
           Categories[selectedCategory as keyof typeof Categories].map((site) => (
             <a
