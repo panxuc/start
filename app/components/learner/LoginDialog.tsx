@@ -32,9 +32,8 @@ export default function LoginDialog() {
         <span className="ml-2">保存凭据以自动登录</span>
       </label>
       <button
-        type="button"
         className="bg-blue-500 text-white rounded-lg p-2 m-2"
-        onClick={() => login(username, password, save)}
+        onClick={async () => await login(username, password, save)}
       >
         登录
       </button>

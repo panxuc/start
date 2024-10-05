@@ -1,6 +1,6 @@
 import React from "react";
 
-import LoginDialog from "./Learner/LoginDialog";
+import LoginDialog from "./learner/LoginDialog";
 
 export default function Learner() {
   return (

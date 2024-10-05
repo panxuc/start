@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import Tabs from "./Tabs";
 
 export default function TabSwitcher() {
-  const [selectedTab, setSelectedTab] = useState("网址导航");
+  const [selectedTab, setSelectedTab] = React.useState("网址导航");
   return (
     <>
       <div className="flex gap-4 mb-8">
@@ -20,7 +20,7 @@ export default function TabSwitcher() {
         ))}
       </div>
 
-      <div className="p-2 bg-white rounded-lg">
+      <div className="p-2 bg-white dark:bg-black rounded-lg">
         <div
           className="transition-opacity duration-500 ease-in-out opacity-90"
           key={selectedTab}

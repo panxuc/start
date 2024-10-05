@@ -1,6 +1,6 @@
 import { ApiError } from "thu-learn-lib";
 
-import Helper from "./Helper";
+import helper from "./Helper";
 import { storeCredential } from "./Storage";
 
 export async function login(username: string, password: string, save: boolean) {
@@ -11,7 +11,7 @@ export async function login(username: string, password: string, save: boolean) {
   });
 
   try {
-    await Promise.race([Helper.login(username, password), timeout]);
+    await Promise.race([helper.login(username, password), timeout]);
   } catch (e) {
     const error = e as ApiError;
     alert(`登录失败: ${error?.reason ?? error.toString() ?? `未知错误`}`);

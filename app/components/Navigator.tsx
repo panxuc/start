@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import Categories from './Categories';
 
 export default function Navigator() {
-  const [selectedCategory, setSelectedCategory] = useState("清华");
+  const [selectedCategory, setSelectedCategory] = React.useState("清华");
   return (
     <>
       <div className="flex flex-wrap justify-center items-center gap-4 mb-8">
