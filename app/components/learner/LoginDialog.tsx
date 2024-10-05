@@ -1,27 +1,59 @@
 import React from "react";
 
-import { login } from "./Actions";
+interface LoginData {
+  username: string;
+  password: string;
+}
 
 export default function LoginDialog() {
-  const [username, setUsername] = React.useState("");
-  const [password, setPassword] = React.useState("");
+  const [loginData, setLoginData] = React.useState<LoginData>({ username: '', password: '' });
   const [save, setSave] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
+  const [error, setError] = React.useState<string | null>(null);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await fetch('/api/learner/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(loginData),
+      });
+      const result = await response.json();
+      setLoading(false);
+      if (response.ok) {
+        alert('Login Successful');
+      } else {
+        setError(result.message);
+      }
+    } catch (er) {
+      setLoading(false);
+      setError('Login Failed')
+    }
+  }
+
   return (
-    <div className="flex flex-col items-center">
-      <h1 className="text-4xl font-bold">登录</h1>
+    <form
+      className="flex flex-col items-center"
+      onSubmit={handleSubmit}
+    >
       <input
         className="border border-gray-300 rounded-lg p-2 m-2"
         type="text"
         placeholder="用户名"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
+        value={loginData.username}
+        onChange={(e) => setLoginData({ ...loginData, username: e.target.value })}
       />
       <input
         className="border border-gray-300 rounded-lg p-2 m-2"
         type="password"
         placeholder="密码"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
+        value={loginData.password}
+        onChange={(e) => setLoginData({ ...loginData, password: e.target.value })}
       />
       <label className="flex items-center m-2">
         <input
@@ -33,10 +65,12 @@ export default function LoginDialog() {
       </label>
       <button
         className="bg-blue-500 text-white rounded-lg p-2 m-2"
-        onClick={async () => await login(username, password, save)}
+        type="submit"
+        disabled={loading}
       >
-        登录
+        {loading ? '登录中……' : '登录'}
       </button>
-    </div>
+      {error && <p className="text-red-500">{error}</p>}
+    </form>
   )
 }
