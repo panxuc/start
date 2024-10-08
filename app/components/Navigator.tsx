@@ -31,7 +31,7 @@ export default function Navigator() {
               className="block p-4 border border-gray-300 rounded-lg transition-transform transform hover:scale-105 hover:shadow-lg"
             >
               <p className="text-xl mb-2">{site.name}</p>
-              <p className="text-xs text-gray-600">{site.desc}</p>
+              {/* <p className="text-xs text-gray-600">{site.desc}</p> */}
             </a>
           ))}
       </div>

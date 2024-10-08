@@ -209,7 +209,7 @@ const Categories = {
     { name: "balenaEtcher", url: "https://etcher.balena.io/", desc: "" },
     { name: "DiskGenius", url: "https://www.diskgenius.cn/download.php", desc: "" },
     { name: "Dism++", url: "https://github.com/Chuyu-Team/Dism-Multi-language", desc: "" },
-    { naem: "图吧工具箱", url: "https://www.tbtool.cn/", desc: "" },
+    { name: "图吧工具箱", url: "https://www.tbtool.cn/", desc: "" },
     { name: "7-Zip", url: "https://www.7-zip.org/", desc: "" },
     { name: "Everything", url: "https://www.voidtools.com/zh-cn/", desc: "" },
     { name: "Zotero中文社区", url: "https://zotero-chinese.com/", desc: "" },
