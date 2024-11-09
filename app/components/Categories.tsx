@@ -106,6 +106,8 @@ const Categories = {
     { name: "Byrut", url: "https://thebyrut.org/", desc: "" },
     { name: "3DMGAME", url: "https://www.3dmgame.com/", desc: "" },
     { name: "雀魂麻将", url: "https://game.maj-soul.com/1/", desc: "" },
+    { name: "vndb", url: "https://vndb.org/", desc: "" },
+    { name: "NekoNyan", url: "https://nekonyansoft.com/index.php/shop", desc: "" },
   ],
   "娱乐": [
     { name: "YouTube", url: "https://www.youtube.com/", desc: "" },
