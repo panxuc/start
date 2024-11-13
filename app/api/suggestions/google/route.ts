@@ -9,7 +9,8 @@ export async function GET(req: Request): Promise<NextResponse> {
   }
 
   try {
-    const response = await fetch(`https://suggestqueries.google.com/complete/search?client=firefox&ds=yt&q=${encodeURIComponent(query)}`);
+    // const response = await fetch(`https://suggestqueries.google.com/complete/search?client=firefox&ds=yt&q=${encodeURIComponent(query)}`);
+    const response = await fetch(`https://api.bing.com/osjson.aspx?query=${encodeURIComponent(query)}`);
     if (!response.ok) {
       console.warn('Failed to fetch suggestions, proceeding without suggestions');
       return NextResponse.json({ suggestions: [] });
