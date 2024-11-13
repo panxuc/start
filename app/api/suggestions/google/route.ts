@@ -15,8 +15,9 @@ export async function GET(req: Request): Promise<NextResponse> {
       console.warn('Failed to fetch suggestions, proceeding without suggestions');
       return NextResponse.json({ suggestions: [] });
     }
-    const data = await response.text();
-    const dataJson = JSON.parse(data);
+    // const data = await response.text();
+    // const dataJson = JSON.parse(data);
+    const data = await response.json();
 
     let suggestions = data[1];
 
