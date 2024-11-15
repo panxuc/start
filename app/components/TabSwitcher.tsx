@@ -5,7 +5,7 @@ export default function TabSwitcher() {
   const [selectedTab, setSelectedTab] = React.useState("网址导航");
   return (
     <>
-      {/* <div className="flex gap-4 mb-8">
+      <div className="flex gap-4 mb-8">
         {Object.keys(Tabs).map((tab) => (
           <button
             key={tab}
@@ -18,7 +18,7 @@ export default function TabSwitcher() {
             {tab}
           </button>
         ))}
-      </div> */}
+      </div>
 
       <div className="p-2 bg-white dark:bg-black rounded-lg">
         <div

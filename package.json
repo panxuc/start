@@ -9,17 +9,21 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^2.3.0",
     "@vercel/speed-insights": "^1.1.0",
     "next": "15.0.3",
     "next-themes": "^0.4.3",
     "react": "^18",
     "react-dom": "^18",
+    "react-redux": "^9.1.2",
+    "redux-logger": "^3.0.6",
     "thu-learn-lib": "^3.2.1"
   },
   "devDependencies": {
     "@types/node": "^22",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@types/redux-logger": "^3.0.13",
     "@types/tough-cookie": "^4.0.5",
     "eslint": "^9",
     "eslint-config-next": "15.0.3",

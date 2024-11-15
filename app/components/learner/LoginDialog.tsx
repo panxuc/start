@@ -3,11 +3,11 @@ import React from "react";
 interface LoginData {
   username: string;
   password: string;
+  save: boolean;
 }
 
 export default function LoginDialog() {
-  const [loginData, setLoginData] = React.useState<LoginData>({ username: '', password: '' });
-  const [save, setSave] = React.useState(false);
+  const [loginData, setLoginData] = React.useState<LoginData>({ username: '', password: '', save: false });
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
 
@@ -58,8 +58,8 @@ export default function LoginDialog() {
       <label className="flex items-center m-2">
         <input
           type="checkbox"
-          checked={save}
-          onChange={(e) => setSave(e.target.checked)}
+          checked={loginData.save}
+          onChange={(e) => setLoginData({ ...loginData, save: e.target.checked })}
         />
         <span className="ml-2">保存凭据以自动登录</span>
       </label>

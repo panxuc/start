@@ -1,7 +1,30 @@
-import { Learn2018Helper } from "thu-learn-lib";
-import { CookieJar } from "tough-cookie";
+import { createSlice } from '@reduxjs/toolkit';
+import { HelperConfig, Learn2018Helper } from "thu-learn-lib";
 
-const cookieJar = new CookieJar();
-const helper = new Learn2018Helper({ cookieJar });
+export interface HelperState {
+  helper: Learn2018Helper;
+  loggedIn: boolean;
+}
 
-export default helper;
+const config: HelperConfig = {};
+
+const initialState: HelperState = {
+  helper: new Learn2018Helper(config),
+  loggedIn: false,
+};
+
+export const helperSlice = createSlice({
+  name: 'helper',
+  initialState,
+  reducers: {
+    loggedIn: (state) => {
+      state.loggedIn = true;
+    },
+    loggedOut: (state) => {
+      state.helper = new Learn2018Helper(config);
+      state.loggedIn = false;
+    },
+  },
+});
+
+export default helperSlice.reducer;
