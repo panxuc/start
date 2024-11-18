@@ -55,6 +55,7 @@ const Categories = {
     { name: "HelloCTF", url: "https://hello-ctf.com/", desc: "" },
   ],
   "文档": [
+    { name: "Notion", url: "https://www.notion.so/", desc: "" },
     { name: "DevDocs", url: "https://devdocs.io/", desc: "" },
     { name: "C++ Reference", url: "https://zh.cppreference.com/w/%E9%A6%96%E9%A1%B5", desc: "" },
     { name: "Python Documentation", url: "https://docs.python.org/zh-cn/3/", desc: "" },
@@ -150,6 +151,14 @@ const Categories = {
     { name: "Desmos", url: "https://www.desmos.com/", desc: "" },
     { name: "GeoGebra", url: "https://www.geogebra.org/", desc: "" },
     { name: "Mathway", url: "https://www.mathway.com/", desc: "" },
+  ],
+  "图片": [
+    { name: "Google图片", url: "https://www.google.com/imghp", desc: "" },
+    { name: "Bing图片", url: "https://cn.bing.com/images", desc: "" },
+    { name: "Pixiv", url: "https://www.pixiv.net/", desc: "" },
+    { name: "Pinterest", url: "https://www.pinterest.com/", desc: "" },
+    { name: "いらすとや", url: "https://www.irasutoya.com/", desc: "" },
+    { name: "CHARAT", url: "https://charat.me/", desc: "" },
   ],
   "邮箱": [
     { name: "Gmail", url: "https://mail.google.com/", desc: "" },
