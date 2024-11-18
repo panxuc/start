@@ -17,7 +17,7 @@
     "react-dom": "^18",
     "react-redux": "^9.1.2",
     "redux-logger": "^3.0.6",
-    "thu-learn-lib": "^3.2.1"
+    "thu-learn-lib": "^4.0.0"
   },
   "devDependencies": {
     "@types/node": "^22",
