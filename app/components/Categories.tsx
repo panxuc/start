@@ -34,7 +34,6 @@ const Categories = {
     { name: "ArXiv", url: "https://arxiv.org/", desc: "" },
     { name: "Cool Papers", url: "https://papers.cool/", desc: "" },
     { name: "Papers With Code", url: "https://paperswithcode.com/", desc: "" },
-    { name: "Overleaf", url: "https://www.overleaf.com/", desc: "" },
     { name: "Z-Library", url: "https://zh.z-lib.gs/", desc: "" },
     { name: "Anna's Archive", url: "https://annas-archive.gs/", desc: "" },
     { name: "中国知网", url: "https://www.cnki.net/", desc: "" },
@@ -54,8 +53,14 @@ const Categories = {
     { name: "CTF All In One", url: "https://firmianay.gitbook.io/ctf-all-in-one/", desc: "" },
     { name: "HelloCTF", url: "https://hello-ctf.com/", desc: "" },
   ],
-  "文档": [
+  "写作": [
     { name: "Notion", url: "https://www.notion.so/", desc: "" },
+    { name: "Overleaf", url: "https://www.overleaf.com/", desc: "" },
+    { name: "Markdown Guide", url: "https://www.markdownguide.org/", desc: "" },
+    { name: "LaTeX Wikibooks", url: "https://zh.wikibooks.org/wiki/LaTeX", desc: "" },
+    { name: "Detexify", url: "https://detexify.kirelabs.org/classify.html", desc: "" },
+  ],
+  "文档": [
     { name: "DevDocs", url: "https://devdocs.io/", desc: "" },
     { name: "C++ Reference", url: "https://zh.cppreference.com/w/%E9%A6%96%E9%A1%B5", desc: "" },
     { name: "Python Documentation", url: "https://docs.python.org/zh-cn/3/", desc: "" },
