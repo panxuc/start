@@ -130,6 +130,7 @@ const Categories = {
     { name: "知乎", url: "https://www.zhihu.com/", desc: "" },
     { name: "微博", url: "https://weibo.com/", desc: "" },
     { name: "NGA", url: "https://bbs.nga.cn/", desc: "" },
+    { name: "LOFTER", url: "https://www.lofter.com/", desc: "" },
     { name: "Facebook", url: "https://www.facebook.com/", desc: "" },
     { name: "X", url: "https://twitter.com/", desc: "" },
     { name: "Instagram", url: "https://www.instagram.com/", desc: "" },
@@ -157,13 +158,10 @@ const Categories = {
     { name: "GeoGebra", url: "https://www.geogebra.org/", desc: "" },
     { name: "Mathway", url: "https://www.mathway.com/", desc: "" },
   ],
-  "图片": [
-    { name: "Google图片", url: "https://www.google.com/imghp", desc: "" },
-    { name: "Bing图片", url: "https://cn.bing.com/images", desc: "" },
-    { name: "Pixiv", url: "https://www.pixiv.net/", desc: "" },
-    { name: "Pinterest", url: "https://www.pinterest.com/", desc: "" },
+  "资源": [
     { name: "いらすとや", url: "https://www.irasutoya.com/", desc: "" },
     { name: "CHARAT", url: "https://charat.me/", desc: "" },
+    { name: "Bestdori", url: "https://bestdori.com/", desc: "" },
   ],
   "邮箱": [
     { name: "Gmail", url: "https://mail.google.com/", desc: "" },
