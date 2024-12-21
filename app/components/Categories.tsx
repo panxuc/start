@@ -56,9 +56,12 @@ const Categories = {
   "写作": [
     { name: "Notion", url: "https://www.notion.so/", desc: "" },
     { name: "Overleaf", url: "https://www.overleaf.com/", desc: "" },
+    { name: "Typst", url: "https://typst.app/", desc: "" },
     { name: "Markdown Guide", url: "https://www.markdownguide.org/", desc: "" },
     { name: "LaTeX Wikibooks", url: "https://zh.wikibooks.org/wiki/LaTeX", desc: "" },
     { name: "Detexify", url: "https://detexify.kirelabs.org/classify.html", desc: "" },
+    { name: "Typst Docs", url: "https://typst.app/docs/", desc: "" },
+    { name: "Typst小蓝书", url: "https://typst-doc-cn.github.io/tutorial/", desc: "" },
   ],
   "文档": [
     { name: "DevDocs", url: "https://devdocs.io/", desc: "" },
