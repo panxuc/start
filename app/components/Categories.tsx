@@ -165,6 +165,7 @@ const Categories = {
     { name: "いらすとや", url: "https://www.irasutoya.com/", desc: "" },
     { name: "CHARAT", url: "https://charat.me/", desc: "" },
     { name: "Bestdori", url: "https://bestdori.com/", desc: "" },
+    { name: "MyGO表情包搜尋器", url: "https://mygo.miyago9267.com/", desc: "" },
   ],
   "邮箱": [
     { name: "Gmail", url: "https://mail.google.com/", desc: "" },
