@@ -22,7 +22,7 @@
   "devDependencies": {
     "@types/node": "^22",
     "@types/react": "^19",
-    "@types/react-dom": "^18",
+    "@types/react-dom": "^19",
     "@types/redux-logger": "^3.0.13",
     "@types/tough-cookie": "^4.0.5",
     "eslint": "^9",
