@@ -165,6 +165,10 @@ const Categories = {
     { name: "いらすとや", url: "https://www.irasutoya.com/", desc: "" },
     { name: "CHARAT", url: "https://charat.me/", desc: "" },
     { name: "Bestdori", url: "https://bestdori.com/", desc: "" },
+    { name: "Sekai Viewer", url: "https://sekai.best/", desc: "" },
+    { name: "ShinyColorsDB", url: "https://shinycolors.moe/", desc: "" },
+    { name: "Idol Story", url: "https://idol.st/", desc: "" },
+    { name: "Karenthuria", url: "https://karth.top/home", desc: "" },
     { name: "MyGO表情包搜尋器", url: "https://mygo.miyago9267.com/", desc: "" },
   ],
   "邮箱": [
@@ -194,6 +198,7 @@ const Categories = {
     { name: "高德地图", url: "https://www.amap.com/", desc: "" },
     { name: "腾讯地图", url: "https://map.qq.com/", desc: "" },
     { name: "Open Street Map", url: "https://www.openstreetmap.org/", desc: "" },
+    { name: "动画巡礼", url: "https://anitabi.cn/", desc: "" },
   ],
   "网络": [
     { name: "SpeedTest", url: "https://www.speedtest.net/", desc: "" },
