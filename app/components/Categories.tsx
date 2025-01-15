@@ -162,6 +162,7 @@ const Categories = {
     { name: "Mathway", url: "https://www.mathway.com/", desc: "" },
   ],
   "资源": [
+    { name: "cloudconvert", url: "https://cloudconvert.com/", desc: "" },
     { name: "いらすとや", url: "https://www.irasutoya.com/", desc: "" },
     { name: "CHARAT", url: "https://charat.me/", desc: "" },
     { name: "Bestdori", url: "https://bestdori.com/", desc: "" },
