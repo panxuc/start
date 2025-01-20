@@ -368,6 +368,16 @@
    "desc": ""
   },
   {
+   "name": "DeepSeek",
+   "url": "https://www.deepseek.com/",
+   "desc": ""
+  },
+  {
+   "name": "DeepSeek Chat",
+   "url": "https://chat.deepseek.com/",
+   "desc": ""
+  },
+  {
    "name": "Gemini",
    "url": "https://gemini.google.com/app",
    "desc": ""
