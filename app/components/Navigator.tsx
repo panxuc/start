@@ -1,8 +1,17 @@
 import React from "react";
-import Categories from './Categories';
 
 export default function Navigator() {
-  const [selectedCategory, setSelectedCategory] = React.useState("清华");
+  const [Categories, setCategories] = React.useState<any[]>([]);
+  const [selectedCategory, setSelectedCategory] = React.useState<string>("");
+
+  React.useEffect(() => {
+    fetch("./categories.json")
+      .then((res) => res.json())
+      .then((data) => {
+        setCategories(data);
+        setSelectedCategory(Object.keys(data)[0]);
+      });
+  }, []);
   return (
     <>
       <div className="flex flex-wrap justify-center items-center gap-4 mb-8">
@@ -22,7 +31,7 @@ export default function Navigator() {
 
       <div className="flex flex-wrap justify-center items-center gap-4 w-full">
         {selectedCategory &&
-          Categories[selectedCategory as keyof typeof Categories].map((site) => (
+          Categories[selectedCategory as keyof typeof Categories].map((site: { name: string; url: string }) => (
             <a
               key={site.name}
               href={site.url}

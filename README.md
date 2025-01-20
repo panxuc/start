@@ -22,7 +22,7 @@ A simple start page based on Next.js.
 
 ## Configuration
 
-You can customize the links in [`app/components/Categories.tsx`](app/components/Categories.tsx).
+You can customize the links in [`public/categories.json`](public/categories.json).
 
 ## License
 

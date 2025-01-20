@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import ExtraScript from "./components/ExtraScript";
 import Footer from "./components/Footer";
 import SearchDiv from "./components/SearchDiv";
 import TabSwitcher from "./components/TabSwitcher";
@@ -20,11 +21,7 @@ export default function Home() {
 
         <Footer />
 
-        <script
-          defer
-          src="https://analytics.panxuc.com/script.js"
-          data-website-id="a853dab6-8e8d-4c85-95c2-0d48bb54e7e7"
-        ></script>
+        <ExtraScript />
 
       </main>
 
