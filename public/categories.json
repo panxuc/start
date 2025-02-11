@@ -368,6 +368,11 @@
       "desc": ""
     },
     {
+      "name": "OpenAI Platform",
+      "url": "https://platform.openai.com/",
+      "desc": ""
+    },
+    {
       "name": "Claude",
       "url": "https://claude.ai/",
       "desc": ""
@@ -380,6 +385,21 @@
     {
       "name": "DeepSeek Chat",
       "url": "https://chat.deepseek.com/",
+      "desc": ""
+    },
+    {
+      "name": "Deepseek Platform",
+      "url": "https://platform.deepseek.com/",
+      "desc": ""
+    },
+    {
+      "name": "硅基流动",
+      "url": "https://siliconflow.cn/zh-cn/",
+      "desc": ""
+    },
+    {
+      "name": "SiliconCloud",
+      "url": "https://cloud.siliconflow.cn/",
       "desc": ""
     },
     {
@@ -1157,6 +1177,11 @@
     {
       "name": "Xuc Archive",
       "url": "https://archive.panxuc.com/",
+      "desc": ""
+    },
+    {
+      "name": "R2 Uploader",
+      "url": "https://r2.panxuc.com/",
       "desc": ""
     },
     {
