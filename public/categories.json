@@ -145,6 +145,11 @@
   ],
   "文献": [
     {
+      "name": "Google Scholar",
+      "url": "https://scholar.google.com/",
+      "desc": ""
+    },
+    {
       "name": "ArXiv",
       "url": "https://arxiv.org/",
       "desc": ""
@@ -565,6 +570,11 @@
       "name": "雀魂麻将",
       "url": "https://game.maj-soul.com/1/",
       "desc": ""
+    },
+    {
+      "name": "CurseForge",
+      "url": "https://www.curseforge.com/",
+      "desc": ""
     }
   ],
   "娱乐": [
@@ -784,6 +794,11 @@
     {
       "name": "Karenthuria",
       "url": "https://karth.top/home",
+      "desc": ""
+    },
+    {
+      "name": "VVQuest",
+      "url": "https://zvv.quest/",
       "desc": ""
     },
     {
