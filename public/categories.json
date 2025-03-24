@@ -94,6 +94,16 @@
       "name": "learnX",
       "url": "https://tsinghua.app/learnX",
       "desc": ""
+    },
+    {
+      "name": "高性能计算导论实验文档",
+      "url": "https://lab.cs.tsinghua.edu.cn/hpc/doc/",
+      "desc": ""
+    },
+    {
+      "name": "EECG",
+      "url": "https://cloud.tsinghua.edu.cn/d/bc56c91e6b414a61bb6f/",
+      "desc": ""
     }
   ],
   "程序": [
@@ -248,6 +258,11 @@
     }
   ],
   "写作": [
+    {
+      "name": "Google Docs",
+      "url": "https://docs.google.com/",
+      "desc": ""
+    },
     {
       "name": "Notion",
       "url": "https://www.notion.so/",
@@ -759,6 +774,11 @@
     {
       "name": "cloudconvert",
       "url": "https://cloudconvert.com/",
+      "desc": ""
+    },
+    {
+      "name": "Nyaa",
+      "url": "https://nyaa.si/",
       "desc": ""
     },
     {
