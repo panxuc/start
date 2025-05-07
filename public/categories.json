@@ -381,15 +381,15 @@
       "desc": ""
     }
   ],
-  "AI": [
+  "AI Chat": [
     {
       "name": "ChatGPT",
       "url": "https://chatgpt.com/",
       "desc": ""
     },
     {
-      "name": "OpenAI Platform",
-      "url": "https://platform.openai.com/",
+      "name": "Grok",
+      "url": "https://grok.com/",
       "desc": ""
     },
     {
@@ -398,28 +398,8 @@
       "desc": ""
     },
     {
-      "name": "DeepSeek",
-      "url": "https://www.deepseek.com/",
-      "desc": ""
-    },
-    {
       "name": "DeepSeek Chat",
       "url": "https://chat.deepseek.com/",
-      "desc": ""
-    },
-    {
-      "name": "Deepseek Platform",
-      "url": "https://platform.deepseek.com/",
-      "desc": ""
-    },
-    {
-      "name": "硅基流动",
-      "url": "https://siliconflow.cn/zh-cn/",
-      "desc": ""
-    },
-    {
-      "name": "SiliconCloud",
-      "url": "https://cloud.siliconflow.cn/",
       "desc": ""
     },
     {
@@ -430,16 +410,6 @@
     {
       "name": "Kimi",
       "url": "https://kimi.moonshot.cn/",
-      "desc": ""
-    },
-    {
-      "name": "天工AI",
-      "url": "https://www.tiangong.cn/",
-      "desc": ""
-    },
-    {
-      "name": "秘塔AI搜索",
-      "url": "https://metaso.cn/",
       "desc": ""
     },
     {
@@ -455,6 +425,28 @@
     {
       "name": "通义千问",
       "url": "https://tongyi.aliyun.com/qianwen/",
+      "desc": ""
+    }
+  ],
+  "AI Platform": [
+    {
+      "name": "OpenAI Platform",
+      "url": "https://platform.openai.com/",
+      "desc": ""
+    },
+    {
+      "name": "Deepseek Platform",
+      "url": "https://platform.deepseek.com/",
+      "desc": ""
+    },
+    {
+      "name": "OpenRouter",
+      "url": "https://openrouter.ai/",
+      "desc": ""
+    },
+    {
+      "name": "硅基流动",
+      "url": "https://cloud.siliconflow.cn/",
       "desc": ""
     }
   ],
@@ -745,6 +737,11 @@
     {
       "name": "科服Wiki",
       "url": "https://wiki.kjfwd.com:8443/",
+      "desc": ""
+    },
+    {
+      "name": "P5R攻略 Wiki",
+      "url": "https://wikiwiki.jp/persona5r/",
       "desc": ""
     }
   ],
