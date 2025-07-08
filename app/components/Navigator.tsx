@@ -1,16 +1,11 @@
 import React from "react";
+import { Categories } from "../config";
 
 export default function Navigator() {
-  const [Categories, setCategories] = React.useState<any[]>([]);
   const [selectedCategory, setSelectedCategory] = React.useState<string>("");
 
   React.useEffect(() => {
-    fetch("./categories.json")
-      .then((res) => res.json())
-      .then((data) => {
-        setCategories(data);
-        setSelectedCategory(Object.keys(data)[0]);
-      });
+    setSelectedCategory(Object.keys(Categories)[0]);
   }, []);
   return (
     <>

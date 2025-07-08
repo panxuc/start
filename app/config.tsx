@@ -1,4 +1,4 @@
-{
+export const Categories = {
   "清华": [
     {
       "name": "清华大学",
@@ -966,6 +966,11 @@
     {
       "name": "RackNerd",
       "url": "https://www.racknerd.com/",
+      "desc": ""
+    },
+    {
+      "name": "阿里云",
+      "url": "https://www.aliyun.com/",
       "desc": ""
     },
     {
