@@ -20,13 +20,11 @@ export default function TabSwitcher() {
         ))}
       </div>
 
-      <div className="p-2 bg-white dark:bg-black rounded-lg">
-        <div
-          className="transition-opacity duration-500 ease-in-out opacity-90"
-          key={selectedTab}
-        >
-          {Tabs[selectedTab as keyof typeof Tabs]}
-        </div>
+      <div
+        className="transition-opacity duration-500 ease-in-out opacity-90"
+        key={selectedTab}
+      >
+        {Tabs[selectedTab as keyof typeof Tabs]}
       </div>
     </>
   )
