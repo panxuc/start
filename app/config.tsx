@@ -96,11 +96,6 @@ export const Categories = {
       "desc": ""
     },
     {
-      "name": "高性能计算导论实验文档",
-      "url": "https://lab.cs.tsinghua.edu.cn/hpc/doc/",
-      "desc": ""
-    },
-    {
       "name": "EECG",
       "url": "https://cloud.tsinghua.edu.cn/d/bc56c91e6b414a61bb6f/",
       "desc": ""
