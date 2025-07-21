@@ -1,30 +1,35 @@
-"use client";
-
-import React from "react";
-import ExtraScript from "./components/ExtraScript";
-import Footer from "./components/Footer";
+import React, { memo } from "react";
+import dynamic from "next/dynamic";
 import SearchDiv from "./components/SearchDiv";
-import TabSwitcher from "./components/TabSwitcher";
 import Title from "./components/Title";
+import { Categories } from "./config";
+
+const TabSwitcher = dynamic(() => import("./components/TabSwitcher"), {
+  loading: () => <div className="h-32 animate-pulse bg-gray-200 rounded-lg"></div>
+});
+const Footer = dynamic(() => import("./components/Footer"));
+const ExtraScript = dynamic(() => import("./components/ExtraScript"));
 
 export default function Home() {
   return (
     <>
-
-      <main className="flex min-h-screen flex-col items-center p-10">
-
-        <Title />
-
-        <SearchDiv />
-
-        <TabSwitcher />
-
-        <Footer />
-
-        <ExtraScript />
-
+      <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-white to-purple-50 -z-10"></div>
+      <main className="flex flex-1 flex-col items-center px-6 py-12 relative">
+        <div className="w-full max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <Title />
+          </div>
+          <div className="flex justify-center mb-16">
+            <SearchDiv />
+          </div>
+          <div className="w-full">
+            <TabSwitcher categories={Categories} />
+          </div>
+        </div>
       </main>
-
+      
+      <Footer />
+      <ExtraScript />
     </>
   );
 }

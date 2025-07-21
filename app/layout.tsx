@@ -16,8 +16,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={notoSansSC.className}>
+    <html lang="zh-CN">
+      <body className={`${notoSansSC.className} min-h-screen flex flex-col`}>
         {children}
         <SpeedInsights />
       </body>

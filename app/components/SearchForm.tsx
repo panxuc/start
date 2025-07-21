@@ -1,43 +1,55 @@
-import { useState, useEffect, useRef } from "react";
+"use client";
+
+import { useState, useEffect, useRef, useCallback, memo } from "react";
 
 interface SearchFormProps {
   actionUrl: string;
   inputName: string;
   placeholder: string;
-  buttonLabel: string;
   api: string;
 }
 
-export default function SearchForm({ actionUrl, inputName, placeholder, buttonLabel, api }: SearchFormProps) {
+const SearchForm = memo(function SearchForm({ actionUrl, inputName, placeholder, api }: SearchFormProps) {
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [inputValue, setInputValue] = useState<string>('');
   const suggestionsRef = useRef<HTMLUListElement | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
+  const debounceRef = useRef<NodeJS.Timeout | null>(null);
 
-  const handleInputChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setInputValue(value);
-
+  const fetchSuggestions = useCallback(async (value: string) => {
     if (value.length > 1) {
       try {
-        // Use a backend proxy to avoid CORS issues
         const response = await fetch(`/api/suggestions/${api}?query=${value}`);
         const data = await response.json();
         setSuggestions(data.suggestions);
       } catch (error) {
         console.error('Error fetching suggestions:', error);
+        setSuggestions([]);
       }
     } else {
       setSuggestions([]);
     }
-  };
+  }, [api]);
 
-  const handleSuggestionClick = (suggestion: string) => {
+  const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setInputValue(value);
+
+    if (debounceRef.current) {
+      clearTimeout(debounceRef.current);
+    }
+
+    debounceRef.current = setTimeout(() => {
+      fetchSuggestions(value);
+    }, 300);
+  }, [fetchSuggestions]);
+
+  const handleSuggestionClick = useCallback((suggestion: string) => {
     setInputValue(suggestion);
     setSuggestions([]);
-  };
+  }, []);
 
-  const handleClickOutside = (event: MouseEvent) => {
+  const handleClickOutside = useCallback((event: MouseEvent) => {
     if (
       suggestionsRef.current &&
       !suggestionsRef.current.contains(event.target as Node) &&
@@ -46,18 +58,21 @@ export default function SearchForm({ actionUrl, inputName, placeholder, buttonLa
     ) {
       setSuggestions([]);
     }
-  };
+  }, []);
 
   useEffect(() => {
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
+      if (debounceRef.current) {
+        clearTimeout(debounceRef.current);
+      }
     };
-  }, []);
+  }, [handleClickOutside]);
 
   return (
-    <form action={actionUrl} method="get" target="_blank" className="flex items-center gap-2 relative">
-      <div className="w-full relative">
+    <form action={actionUrl} method="get" target="_blank" className="group relative">
+      <div className="relative">
         <input
           ref={inputRef}
           type="text"
@@ -65,15 +80,24 @@ export default function SearchForm({ actionUrl, inputName, placeholder, buttonLa
           value={inputValue}
           onChange={handleInputChange}
           placeholder={placeholder}
-          className="px-4 py-2 border border-gray-300 rounded-lg w-full"
+          className="w-full px-4 py-3 pr-12 bg-white border border-gray-200 rounded-2xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 placeholder-gray-400"
         />
+        <button 
+          type="submit" 
+          title="Search"
+          className="absolute right-2 top-1/2 -translate-y-1/2 p-2 text-gray-400 hover:text-blue-500 transition-colors duration-200"
+        >
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+        </button>
         {suggestions.length > 0 && (
-          <ul ref={suggestionsRef} className="absolute top-full left-0 w-full bg-white border border-gray-300 rounded-lg mt-1 z-10">
+          <ul ref={suggestionsRef} className="absolute top-full left-0 w-full bg-white border border-gray-200 rounded-2xl mt-2 shadow-lg backdrop-blur-sm z-10 overflow-hidden">
             {suggestions.map((suggestion, index) => (
               <li
-                key={index}
+                key={`${suggestion}-${index}`}
                 onClick={() => handleSuggestionClick(suggestion)}
-                className="px-4 py-2 cursor-pointer hover:bg-gray-100"
+                className="px-4 py-3 cursor-pointer hover:bg-blue-50 transition-colors duration-150 border-b border-gray-100 last:border-b-0"
               >
                 {suggestion}
               </li>
@@ -81,9 +105,8 @@ export default function SearchForm({ actionUrl, inputName, placeholder, buttonLa
           </ul>
         )}
       </div>
-      <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded-lg">
-        {buttonLabel}
-      </button>
     </form>
   );
-}
+});
+
+export default SearchForm;
