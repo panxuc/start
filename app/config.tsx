@@ -21,6 +21,11 @@ export const Categories = {
       "desc": ""
     },
     {
+      "name": "研招报名",
+      "url": "https://yzbm.tsinghua.edu.cn/",
+      "desc": ""
+    },
+    {
       "name": "WebVPN",
       "url": "https://webvpn.tsinghua.edu.cn/login",
       "desc": ""
