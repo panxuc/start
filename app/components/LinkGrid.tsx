@@ -130,6 +130,8 @@ const FaviconImage = memo(function FaviconImage({ url, name }: { url: string; na
         className={`w-full h-full object-cover ${!cacheState.loaded ? 'hidden' : 'block'}`}
         onLoad={handleLoad}
         onError={handleError}
+        loading="lazy"
+        decoding="async"
       />
     </div>
   );

@@ -11,7 +11,9 @@ const Title = memo(function Title() {
           alt="Xuc Pan" 
           width={48} 
           height={48} 
-          className="relative rounded-2xl shadow-lg" 
+          className="relative rounded-2xl shadow-lg"
+          priority={false}
+          loading="lazy"
         />
       </div>
       <div className="flex flex-col">
