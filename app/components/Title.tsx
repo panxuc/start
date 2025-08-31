@@ -20,7 +20,6 @@ const Title = memo(function Title() {
         <h1 className="text-5xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
           Xuc Start
         </h1>
-        <p className="text-gray-500 text-sm mt-1">Your gateway to the web</p>
       </div>
     </div>
   );

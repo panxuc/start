@@ -13,7 +13,7 @@ const ExtraScript = dynamic(() => import("./components/ExtraScript"));
 export default function Home() {
   return (
     <>
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-white to-purple-50 -z-10"></div>
+      <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 -z-10"></div>
       <main className="flex flex-1 flex-col items-center px-6 py-12 relative">
         <div className="w-full max-w-7xl mx-auto">
           <div className="text-center mb-16">

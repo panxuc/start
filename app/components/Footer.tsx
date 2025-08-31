@@ -2,12 +2,12 @@ import { memo } from 'react';
 
 const Footer = memo(function Footer() {
   return (
-    <footer className="mt-auto py-8 w-full text-center bg-gradient-to-r from-gray-50 to-gray-100 border-t border-gray-200">
+    <footer className="mt-auto py-8 w-full text-center bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 border-t border-gray-200 dark:border-gray-700">
       <div className="max-w-4xl mx-auto px-4">
         <div className="flex flex-col items-center space-y-4">
           <div className="flex items-center space-x-2">
             <div className="w-2 h-2 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"></div>
-            <p className="text-gray-600 font-medium">
+            <p className="text-gray-600 dark:text-gray-300 font-medium">
               Copyright © {new Date().getFullYear()} Xuc Pan. All Rights Reserved.
             </p>
             <div className="w-2 h-2 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"></div>
@@ -16,7 +16,7 @@ const Footer = memo(function Footer() {
             href="https://beian.miit.gov.cn/" 
             target="_blank" 
             rel="noopener noreferrer"
-            className="text-sm text-gray-500 hover:text-blue-500 transition-colors duration-200 underline underline-offset-2"
+            className="text-sm text-gray-500 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400 transition-colors duration-200 underline underline-offset-2"
           >
             京ICP备2025135198号-2
           </a>

@@ -116,7 +116,7 @@ const FaviconImage = memo(function FaviconImage({ url, name }: { url: string; na
   }
   
   return (
-    <div className="w-4 h-4 rounded overflow-hidden bg-gray-100 flex-shrink-0">
+    <div className="w-4 h-4 rounded overflow-hidden bg-gray-100 dark:bg-gray-700 flex-shrink-0">
       {!cacheState.loaded && (
         <div className="w-full h-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white font-bold text-xs">
           {name.charAt(0)}
@@ -147,15 +147,15 @@ const LinkGrid = memo(function LinkGrid({ links }: LinkGridProps) {
           target="_blank"
           rel="noopener noreferrer"
           title={link.desc || link.name}
-          className="group relative p-4 bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md hover:border-blue-300 hover:-translate-y-0.5 transition-all duration-300"
+          className="group relative p-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-xl shadow-sm hover:shadow-md hover:border-blue-300 dark:hover:border-blue-400 hover:-translate-y-0.5 transition-all duration-300"
         >
           <div className="flex items-center space-x-2">
             <FaviconImage url={link.url} name={link.name} />
-            <p className="font-medium text-gray-800 text-sm leading-tight truncate flex-1">
+            <p className="font-medium text-gray-800 dark:text-gray-200 text-sm leading-tight truncate flex-1">
               {link.name}
             </p>
           </div>
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl pointer-events-none"></div>
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-50 dark:from-blue-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl pointer-events-none"></div>
         </a>
       ))}
     </div>

@@ -32,8 +32,8 @@ const TabSwitcher = memo(function TabSwitcher({ categories }: TabSwitcherProps) 
             onClick={() => setSelectedTab(tab)}
             className={`relative py-2.5 px-4 text-sm font-medium rounded-full transition-all duration-300 ${
               selectedTab === tab
-                ? "bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg transform scale-105"
-                : "bg-white text-gray-600 hover:bg-gray-50 hover:text-gray-800 border border-gray-200 hover:border-gray-300 hover:shadow-md"
+                ? "bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg border border-transparent"
+                : "bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-gray-800 dark:hover:text-gray-100 border border-gray-200 dark:border-gray-600 hover:border-gray-300 dark:hover:border-gray-500 hover:shadow-md"
             }`}
           >
             {selectedTab === tab && (
