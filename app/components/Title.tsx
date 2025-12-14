@@ -3,24 +3,24 @@ import { memo } from 'react';
 
 const Title = memo(function Title() {
   return (
-    <div className="flex items-center gap-4 mb-8">
-      <div className="relative">
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-400 to-purple-600 rounded-2xl blur-sm opacity-20"></div>
+    <div className="flex flex-col items-center gap-3 mb-8 animate-in fade-in slide-in-from-top-4 duration-700">
+      <div className="relative group">
+        <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
         <Image 
           src="/favicon.ico" 
-          alt="Xuc Pan" 
-          width={48} 
-          height={48} 
-          className="relative rounded-2xl shadow-lg"
-          priority={false}
-          loading="lazy"
+          alt="Logo" 
+          width={42} 
+          height={42} 
+          className="relative rounded-xl shadow-sm bg-white dark:bg-gray-800 p-1"
+          priority
         />
       </div>
-      <div className="flex flex-col">
-        <h1 className="text-5xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-          Xuc Start
-        </h1>
-      </div>
+      {/* 如果不需要显示文字标题（为了更极简），可以注释掉下面这部分，
+         或者只在 hover Logo 时显示 
+      */}
+      <h1 className="text-2xl font-bold text-gray-800 dark:text-white tracking-tight">
+        Xuc Start
+      </h1>
     </div>
   );
 });

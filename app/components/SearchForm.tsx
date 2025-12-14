@@ -23,7 +23,6 @@ const SearchForm = memo(function SearchForm({ actionUrl, inputName, placeholder,
         const data = await response.json();
         setSuggestions(data.suggestions);
       } catch (error) {
-        console.error('Error fetching suggestions:', error);
         setSuggestions([]);
       }
     } else {
@@ -38,7 +37,6 @@ const SearchForm = memo(function SearchForm({ actionUrl, inputName, placeholder,
     if (debounceRef.current) {
       clearTimeout(debounceRef.current);
     }
-
     debounceRef.current = setTimeout(() => {
       fetchSuggestions(value);
     }, 300);
@@ -47,6 +45,8 @@ const SearchForm = memo(function SearchForm({ actionUrl, inputName, placeholder,
   const handleSuggestionClick = useCallback((suggestion: string) => {
     setInputValue(suggestion);
     setSuggestions([]);
+    // 可选：点击建议直接搜索
+    // if (inputRef.current?.form) inputRef.current.form.submit();
   }, []);
 
   const handleClickOutside = useCallback((event: MouseEvent) => {
@@ -62,17 +62,12 @@ const SearchForm = memo(function SearchForm({ actionUrl, inputName, placeholder,
 
   useEffect(() => {
     document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-      if (debounceRef.current) {
-        clearTimeout(debounceRef.current);
-      }
-    };
+    return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [handleClickOutside]);
 
   return (
-    <form action={actionUrl} method="get" target="_blank" className="group relative">
-      <div className="relative">
+    <form action={actionUrl} method="get" target="_blank" className="relative w-full">
+      <div className="relative group">
         <input
           ref={inputRef}
           type="text"
@@ -80,26 +75,30 @@ const SearchForm = memo(function SearchForm({ actionUrl, inputName, placeholder,
           value={inputValue}
           onChange={handleInputChange}
           placeholder={placeholder}
-          className="w-full px-4 py-3 pr-12 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-2xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 placeholder-gray-400 dark:placeholder-gray-500 text-gray-900 dark:text-gray-100"
+          autoComplete="off"
+          className="w-full px-6 py-4 pr-14 bg-white/90 dark:bg-gray-800/90 backdrop-blur-xl border border-gray-200 dark:border-gray-700 rounded-2xl shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all duration-300 placeholder-gray-400 text-gray-800 dark:text-gray-100 text-lg"
         />
+        
         <button 
           type="submit" 
           title="Search"
-          className="absolute right-2 top-1/2 -translate-y-1/2 p-2 text-gray-400 dark:text-gray-500 hover:text-blue-500 dark:hover:text-blue-400 transition-colors duration-200"
+          className="absolute right-3 top-1/2 -translate-y-1/2 p-2 bg-blue-500 hover:bg-blue-600 text-white rounded-xl transition-all duration-200 shadow-md hover:shadow-lg active:scale-95"
         >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
           </svg>
         </button>
+
         {suggestions.length > 0 && (
-          <ul ref={suggestionsRef} className="absolute top-full left-0 w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-2xl mt-2 shadow-lg backdrop-blur-sm z-10 overflow-hidden">
+          <ul ref={suggestionsRef} className="absolute top-full left-0 w-full bg-white/95 dark:bg-gray-800/95 backdrop-blur-xl border border-gray-100 dark:border-gray-700 rounded-2xl mt-2 shadow-2xl z-50 overflow-hidden py-2 animate-in fade-in zoom-in-95 duration-200">
             {suggestions.map((suggestion, index) => (
               <li
                 key={`${suggestion}-${index}`}
                 onClick={() => handleSuggestionClick(suggestion)}
-                className="px-4 py-3 cursor-pointer hover:bg-blue-50 dark:hover:bg-gray-700 transition-colors duration-150 border-b border-gray-100 dark:border-gray-700 last:border-b-0 text-gray-900 dark:text-gray-100"
+                className="px-6 py-2.5 cursor-pointer hover:bg-blue-50/80 dark:hover:bg-gray-700/80 transition-colors text-gray-700 dark:text-gray-200 text-base flex items-center space-x-3"
               >
-                {suggestion}
+                <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+                <span>{suggestion}</span>
               </li>
             ))}
           </ul>

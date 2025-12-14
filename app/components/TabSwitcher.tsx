@@ -3,7 +3,6 @@
 import React, { useState, useMemo, memo } from "react";
 import LinkGrid from "./LinkGrid";
 
-// Define types for the props for better type-safety
 type Link = {
   name: string;
   url: string;
@@ -23,31 +22,28 @@ const TabSwitcher = memo(function TabSwitcher({ categories }: TabSwitcherProps) 
   const [selectedTab, setSelectedTab] = useState(() => categoryKeys[0]);
 
   return (
-    <>
-      <div className="flex flex-wrap justify-center gap-2 mb-12">
+    <div className="flex flex-col items-center w-full">
+      <div className="flex flex-wrap justify-center gap-2 mb-8 p-1.5 bg-gray-100/50 dark:bg-gray-800/50 backdrop-blur-sm rounded-2xl border border-gray-200/50 dark:border-gray-700/50 inline-flex mx-auto">
         {categoryKeys.map((tab) => (
           <button
             key={tab}
             type="button"
             onClick={() => setSelectedTab(tab)}
-            className={`relative py-2.5 px-4 text-sm font-medium rounded-full transition-all duration-300 ${
+            className={`px-5 py-2 text-sm font-medium rounded-xl transition-all duration-300 ${
               selectedTab === tab
-                ? "bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg border border-transparent"
-                : "bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-gray-800 dark:hover:text-gray-100 border border-gray-200 dark:border-gray-600 hover:border-gray-300 dark:hover:border-gray-500 hover:shadow-md"
+                ? "bg-white dark:bg-gray-700 text-blue-600 dark:text-blue-300 shadow-sm scale-100"
+                : "text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 hover:bg-white/50 dark:hover:bg-gray-700/50"
             }`}
           >
-            {selectedTab === tab && (
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full blur-sm opacity-30 -z-10"></div>
-            )}
             {tab}
           </button>
         ))}
       </div>
 
-      <div className="transition-opacity duration-500 ease-in-out opacity-90 w-full" key={selectedTab}>
+      <div className="w-full animate-in fade-in slide-in-from-bottom-4 duration-500" key={selectedTab}>
         <LinkGrid links={categories[selectedTab]} />
       </div>
-    </>
+    </div>
   );
 });
 
