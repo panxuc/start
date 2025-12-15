@@ -1,14 +1,25 @@
 import type { Metadata } from "next";
-import { Noto_Sans_SC } from "next/font/google";
+import { Noto_Sans_SC, Inter } from "next/font/google";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import DarkModeProvider from "./components/DarkModeProvider";
 import "./globals.css";
 
-const notoSansSC = Noto_Sans_SC({ subsets: ["latin"] });
+const notoSansSC = Noto_Sans_SC({
+  subsets: ["latin"],
+  weight: ['100', '300', '400', '500', '700', '900'],
+  variable: '--font-noto-sans-sc',
+  display: 'swap',
+});
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: '--font-inter',
+  display: 'swap',
+});
 
 export const metadata: Metadata = {
   title: "Xuc Start",
-  description: "Xuc Pan 提供的网址导航",
+  description: "网址导航",
 };
 
 export default function RootLayout({
@@ -37,7 +48,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={`${notoSansSC.className} min-h-screen flex flex-col bg-[#F8F9FB] dark:bg-gray-900 transition-colors duration-300`}>
+      <body className={`${inter.variable} ${notoSansSC.variable} font-sans min-h-screen flex flex-col bg-[#F8F9FB] dark:bg-gray-900 transition-colors duration-300`}>
         <DarkModeProvider>
           {children}
         </DarkModeProvider>

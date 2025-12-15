@@ -9,26 +9,50 @@ const config: Config = {
   darkMode: 'class',
   theme: {
     extend: {
+      fontFamily: {
+        sans: [
+          "-apple-system",
+          "BlinkMacSystemFont",
+          "PingFang SC",
+          "Hiragino Sans GB",
+          "var(--font-inter)",
+          "Roboto",
+          "Segoe UI",
+          "var(--font-noto-sans-sc)",
+          "Microsoft YaHei",
+          "sans-serif",
+          "Apple Color Emoji",
+          "Segoe UI Emoji",
+          "Segoe UI Symbol",
+          "Noto Color Emoji"
+        ],
+      },
       colors: {
-        hacker: {
-          bg: '#050505',
-          primary: '#00ff41',
-          dim: '#003b00',
-          dark: '#001100',
+        glass: {
+          border: 'rgba(255, 255, 255, 0.2)',
+          surface: 'rgba(255, 255, 255, 0.1)',
+          highlight: 'rgba(255, 255, 255, 0.5)',
         }
       },
+      boxShadow: {
+        'glass': '0 4px 30px rgba(0, 0, 0, 0.1)',
+        'glass-hover': '0 8px 32px 0 rgba(31, 38, 135, 0.15)',
+        'neon': '0 0 20px rgba(139, 92, 246, 0.5)',
+      },
       animation: {
-        'blink': 'blink 1s step-end infinite',
-        'scan': 'scan 4s linear infinite',
+        'blob': 'blob 10s infinite',
+        'float': 'float 6s ease-in-out infinite',
       },
       keyframes: {
-        blink: {
-          '0%, 100%': { opacity: '1' },
-          '50%': { opacity: '0' },
+        blob: {
+          '0%': { transform: 'translate(0px, 0px) scale(1)' },
+          '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+          '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+          '100%': { transform: 'translate(0px, 0px) scale(1)' },
         },
-        scan: {
-          '0%': { transform: 'translateY(-100%)' },
-          '100%': { transform: 'translateY(100%)' },
+        float: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-10px)' },
         }
       }
     },
