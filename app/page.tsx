@@ -17,7 +17,7 @@ export default function Home() {
       </header>
 
       <div className="flex-1 w-full px-4 md:px-8 pt-12 pb-20 flex flex-col items-center gap-12">
-        <div className="w-full max-w-3xl animate-float">
+        <div className="w-full max-w-3xl animate-float relative z-50">
           <SearchWidget />
         </div>
         <LinkDashboard />
