@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@vercel/speed-insights": "^1.2.0",
-    "framer-motion": "^12.23.26",
+    "framer-motion": "^12.34.0",
     "next": "15.2.8",
     "react": "^19",
     "react-dom": "^19"
