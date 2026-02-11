@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState } from "react";
 import { useTheme } from "./DarkModeProvider";
 
 export default function ThemeToggle() {
@@ -9,20 +9,12 @@ export default function ThemeToggle() {
 
   useEffect(() => { setMounted(true); }, []);
 
-  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    e.currentTarget.style.setProperty('--spotlight-x', `${x}px`);
-    e.currentTarget.style.setProperty('--spotlight-y', `${y}px`);
-  }, []);
-
   if (!mounted) { return <div className="w-9 h-9 p-2"></div>; }
 
   return (
     <button
       onClick={toggleTheme}
-      className="p-3 rounded-full bg-white/30 dark:bg-black/20 backdrop-blur-xl border border-white/40 dark:border-white/10 shadow-sm hover:shadow-md transition-all duration-300 group text-gray-600 dark:text-gray-300"
+      className="liquid-panel liquid-chrome liquid-pill liquid-ring p-3.5 transition-all duration-300 text-slate-700 dark:text-slate-200 hover:scale-105 active:scale-95"
       aria-label="Toggle Dark Mode"
     >
       {theme === "dark" ? (

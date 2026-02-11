@@ -3,15 +3,21 @@
 @tailwind utilities;
 
 :root {
-  --background-base: #ffffff;
-  --foreground: #09090b;
+  --background-base: #f2f4f8;
+  --foreground: #0f172a;
+  --panel-bg: rgba(255, 255, 255, 0.76);
+  --panel-border: rgba(255, 255, 255, 0.85);
+  --panel-shadow: 0 16px 38px -24px rgba(15, 23, 42, 0.35);
+  --panel-muted: rgba(51, 65, 85, 0.75);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background-base: #050505;
-    --foreground: #fafafa;
-  }
+.dark {
+  --background-base: #0b1220;
+  --foreground: #e2e8f0;
+  --panel-bg: rgba(17, 25, 40, 0.7);
+  --panel-border: rgba(148, 163, 184, 0.2);
+  --panel-shadow: 0 20px 48px -30px rgba(0, 0, 0, 0.7);
+  --panel-muted: rgba(203, 213, 225, 0.72);
 }
 
 body {
@@ -19,36 +25,109 @@ body {
   background-color: var(--background-base);
   font-feature-settings: "ss01", "cv01";
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
-@keyframes blob {
-  0% {
-    transform: translate(0px, 0px) scale(1);
-  }
-
-  33% {
-    transform: translate(30px, -50px) scale(1.1);
-  }
-
-  66% {
-    transform: translate(-20px, 20px) scale(0.9);
-  }
-
-  100% {
-    transform: translate(0px, 0px) scale(1);
-  }
+.liquid-page {
+  position: relative;
+  isolation: isolate;
 }
 
-.animate-blob {
-  animation: blob 7s infinite;
+.liquid-orb {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(56px);
+  pointer-events: none;
 }
 
-.animation-delay-2000 {
-  animation-delay: 2s;
+.liquid-orb-1 {
+  width: 36vw;
+  height: 36vw;
+  min-width: 220px;
+  min-height: 220px;
+  top: -10%;
+  left: -6%;
+  background: radial-gradient(circle at 30% 30%, rgba(123, 155, 255, 0.45), rgba(123, 155, 255, 0));
 }
 
-.animation-delay-4000 {
-  animation-delay: 4s;
+.liquid-orb-2 {
+  width: 28vw;
+  height: 28vw;
+  min-width: 180px;
+  min-height: 180px;
+  top: -8%;
+  right: -6%;
+  background: radial-gradient(circle at 30% 30%, rgba(125, 196, 238, 0.38), rgba(125, 196, 238, 0));
+}
+
+.liquid-orb-3 {
+  width: 32vw;
+  height: 32vw;
+  min-width: 220px;
+  min-height: 220px;
+  bottom: -14%;
+  left: 22%;
+  background: radial-gradient(circle at 35% 35%, rgba(177, 145, 241, 0.36), rgba(177, 145, 241, 0));
+}
+
+.dark .liquid-orb-1 {
+  background: radial-gradient(circle at 30% 30%, rgba(70, 102, 182, 0.38), rgba(70, 102, 182, 0));
+}
+
+.dark .liquid-orb-2 {
+  background: radial-gradient(circle at 30% 30%, rgba(69, 150, 176, 0.28), rgba(69, 150, 176, 0));
+}
+
+.dark .liquid-orb-3 {
+  background: radial-gradient(circle at 35% 35%, rgba(95, 83, 164, 0.26), rgba(95, 83, 164, 0));
+}
+
+.liquid-panel {
+  background: var(--panel-bg);
+  border: 1px solid var(--panel-border);
+  box-shadow: var(--panel-shadow);
+  backdrop-filter: blur(14px) saturate(130%);
+  -webkit-backdrop-filter: blur(14px) saturate(130%);
+}
+
+.liquid-chrome {
+  position: relative;
+  overflow: hidden;
+}
+
+.liquid-chrome::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.liquid-chrome::after {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0) 38%);
+  opacity: 0.3;
+}
+
+.dark .liquid-chrome::after {
+  opacity: 0.16;
+}
+
+.liquid-pill {
+  border-radius: 9999px;
+}
+
+.liquid-card {
+  border-radius: 22px;
+}
+
+.liquid-text-muted {
+  color: var(--panel-muted);
 }
 
 .no-scrollbar::-webkit-scrollbar {
@@ -61,33 +140,10 @@ body {
 }
 
 @layer utilities {
-  .glass-spotlight {
-    @apply relative overflow-hidden;
-  }
-
-  .glass-spotlight::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: 2;
-    pointer-events: none;
-    mix-blend-mode: overlay;
-
-    background: radial-gradient(600px circle at var(--spotlight-x, -1000px) var(--spotlight-y, -1000px),
-        rgba(255, 255, 255, 0.4),
-        transparent 40%);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-  }
-
-  .glass-spotlight:hover::before {
-    opacity: 1;
-  }
-
-  .dark .glass-spotlight::before {
-    mix-blend-mode: soft-light;
-    background: radial-gradient(600px circle at var(--spotlight-x, -1000px) var(--spotlight-y, -1000px),
-        rgba(255, 255, 255, 0.25),
-        transparent 40%);
+  .liquid-ring {
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.28),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.1),
+      0 12px 28px -22px rgba(15, 23, 42, 0.45);
   }
 }

@@ -34,12 +34,11 @@ export default function DarkModeProvider({ children }: { children: React.ReactNo
   const toggleTheme = () => {
     const newTheme = theme === "dark" ? "light" : "dark";
     setTheme(newTheme);
-    localStorage.setItem("theme", newTheme);
-    updateDOM(newTheme);
   };
 
   useEffect(() => {
     updateDOM(theme);
+    localStorage.setItem("theme", theme);
   }, [theme]);
 
   return (
