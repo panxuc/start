@@ -1,0 +1,15 @@
+services:
+  start:
+    build: .
+    ports:
+      - "3000:3000"
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      START_STORAGE_DRIVER: local-file
+      NAVIGATION_FILE_PATH: /app/data/navigation.local.json
+      SITE_SETTINGS_FILE_PATH: /app/data/site-settings.local.json
+    volumes:
+      - ./data:/app/data
+    restart: unless-stopped

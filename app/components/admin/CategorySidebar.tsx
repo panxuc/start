@@ -1,7 +1,7 @@
 "use client";
 
-import React from "react";
-import { Button, Card, TextField } from "../md3";
+import { useEffect, useState } from "react";
+import { ArrowDown, ArrowUp, Pencil, Plus, Trash2 } from "lucide-react";
 import type { CategoryMap } from "../../config";
 
 interface CategorySidebarProps {
@@ -9,6 +9,7 @@ interface CategorySidebarProps {
   activeCategory: string;
   onSetActive: (name: string) => void;
   onUpdate: (updater: (draft: CategoryMap) => CategoryMap) => void;
+  onRequestDeleteCategory: (name: string) => void;
 }
 
 function moveInArray<T>(items: T[], from: number, to: number): T[] {
@@ -24,89 +25,169 @@ export default function CategorySidebar({
   activeCategory,
   onSetActive,
   onUpdate,
+  onRequestDeleteCategory,
 }: CategorySidebarProps) {
   const names = Object.keys(categories);
-  const [newName, setNewName] = React.useState("");
-  const [renameName, setRenameName] = React.useState(activeCategory);
-  const [dragIndex, setDragIndex] = React.useState<number | null>(null);
+  const activeIndex = names.indexOf(activeCategory);
+  const [newName, setNewName] = useState("");
+  const [renameName, setRenameName] = useState(activeCategory);
+  const [dragIndex, setDragIndex] = useState<number | null>(null);
 
-  React.useEffect(() => { setRenameName(activeCategory); }, [activeCategory]);
+  useEffect(() => {
+    setRenameName(activeCategory);
+  }, [activeCategory]);
 
   return (
-    <Card className="!p-16dp">
-      <h2 className="text-[0.875rem] font-medium text-md-on-surface px-4dp mb-12dp">分类</h2>
+    <section className="paper-card p-4">
+      <h2 className="mb-3 text-base font-semibold text-near-black">分类</h2>
 
-      <div className="max-h-[520px] overflow-auto no-scrollbar flex flex-col gap-4dp">
+      <div className="no-scrollbar flex max-h-[520px] flex-col gap-1 overflow-auto">
         {names.map((name, index) => {
           const isActive = name === activeCategory;
           return (
             <div
               key={name}
-              className={`grid grid-cols-[1fr_auto_auto] gap-4dp rounded-md3-sm transition-colors ${dragIndex === index ? "bg-md-secondary-container/50" : ""}`}
+              className={`rounded-md transition-colors ${
+                dragIndex === index ? "bg-ink-tint" : ""
+              }`}
               draggable
-              onDragStart={(e) => { setDragIndex(index); e.dataTransfer.effectAllowed = "move"; }}
-              onDragOver={(e) => e.preventDefault()}
-              onDrop={(e) => {
-                e.preventDefault();
+              onDragStart={(event) => {
+                setDragIndex(index);
+                event.dataTransfer.effectAllowed = "move";
+              }}
+              onDragOver={(event) => event.preventDefault()}
+              onDrop={(event) => {
+                event.preventDefault();
                 if (dragIndex === null || dragIndex === index) return;
-                onUpdate((d) => Object.fromEntries(moveInArray(Object.entries(d), dragIndex, index)));
+                onUpdate((draft) => Object.fromEntries(moveInArray(Object.entries(draft), dragIndex, index)));
               }}
               onDragEnd={() => setDragIndex(null)}
             >
               <button
+                type="button"
                 onClick={() => onSetActive(name)}
-                className={`text-left rounded-md3-sm px-12dp py-12dp text-[0.875rem] transition-all duration-md3-s4 ease-md3-standard ${
-                  isActive ? "bg-md-secondary-container text-md-on-secondary-container" : "text-md-on-surface hover:bg-md-surface-container-high"
+                className={`w-full rounded-md px-3 py-2.5 text-left text-sm transition-colors ${
+                  isActive
+                    ? "bg-ink text-ivory"
+                    : "text-warm-dark hover:bg-ink-tint hover:text-ink"
                 }`}
               >
-                <span className="flex items-center justify-between gap-8dp">
+                <span className="flex items-center justify-between gap-2">
                   <span className="truncate">{name}</span>
-                  <span className="shrink-0 rounded-md3-xs bg-md-surface-container-highest px-8dp py-4dp text-[10px] leading-none text-md-on-surface-variant">
+                  <span
+                    className={`rounded px-2 py-0.5 text-[0.68rem] leading-none ${
+                      isActive ? "bg-ivory/20 text-ivory" : "bg-ink-tint text-ink"
+                    }`}
+                  >
                     {(categories[name] || []).length}
                   </span>
                 </span>
               </button>
-              <button onClick={() => onUpdate((d) => Object.fromEntries(moveInArray(Object.entries(d), index, index - 1)))} disabled={index === 0}
-                className="rounded-md3-sm bg-md-surface-container-high px-8dp text-xs disabled:opacity-40 text-md-on-surface transition-colors">↑</button>
-              <button onClick={() => onUpdate((d) => Object.fromEntries(moveInArray(Object.entries(d), index, index + 1)))} disabled={index === names.length - 1}
-                className="rounded-md3-sm bg-md-surface-container-high px-8dp text-xs disabled:opacity-40 text-md-on-surface transition-colors">↓</button>
             </div>
           );
         })}
       </div>
 
-      <div className="h-px bg-md-surface-container-highest my-12dp" />
+      <div className="my-4 h-px bg-paper-border-soft" />
 
-      <div className="flex flex-col gap-8dp">
-        <div className="flex gap-8dp">
-          <TextField value={newName} onChange={(e) => setNewName(e.target.value)} placeholder="新分类" className="flex-1 !py-10dp" />
-          <Button size="small" onClick={() => {
-            const n = newName.trim(); if (!n) return;
-            onUpdate((d) => { if (d[n]) throw new Error("分类已存在"); d[n] = []; return d; });
-            setNewName("");
-          }}>添加</Button>
+      <div className="flex flex-col gap-2">
+        <div className="grid grid-cols-2 gap-2">
+          <button
+            type="button"
+            onClick={() =>
+              onUpdate((draft) =>
+                Object.fromEntries(moveInArray(Object.entries(draft), activeIndex, activeIndex - 1))
+              )
+            }
+            disabled={activeIndex <= 0}
+            className="paper-button ghost min-h-0 px-2 py-1 text-xs"
+          >
+            <ArrowUp className="h-4 w-4" aria-hidden="true" />
+            上移
+          </button>
+          <button
+            type="button"
+            onClick={() =>
+              onUpdate((draft) =>
+                Object.fromEntries(moveInArray(Object.entries(draft), activeIndex, activeIndex + 1))
+              )
+            }
+            disabled={activeIndex < 0 || activeIndex >= names.length - 1}
+            className="paper-button ghost min-h-0 px-2 py-1 text-xs"
+          >
+            <ArrowDown className="h-4 w-4" aria-hidden="true" />
+            下移
+          </button>
         </div>
-        <div className="flex gap-8dp">
-          <TextField value={renameName} onChange={(e) => setRenameName(e.target.value)} placeholder="重命名" className="flex-1 !py-10dp" />
-          <Button variant="outlined" size="small" onClick={() => {
-            const next = renameName.trim(); if (!next || !activeCategory) return;
-            onUpdate((d) => {
-              if (!d[activeCategory]) return d;
-              if (next !== activeCategory && d[next]) throw new Error("目标分类名已存在");
-              const entries = Object.entries(d).map(([k, v]) => k === activeCategory ? [next, v] as [string, typeof v] : [k, v] as [string, typeof v]);
-              onSetActive(next);
-              return Object.fromEntries(entries);
-            });
-          }}>重命名</Button>
+        <div className="flex gap-2">
+          <input
+            value={newName}
+            onChange={(event) => setNewName(event.target.value)}
+            placeholder="新分类"
+            className="paper-input min-h-9 flex-1 py-2 text-sm"
+          />
+          <button
+            type="button"
+            className="paper-button px-3 text-sm"
+            onClick={() => {
+              const name = newName.trim();
+              onUpdate((draft) => {
+                if (!name) throw new Error("请输入分类名");
+                if (draft[name]) throw new Error("分类已存在");
+                draft[name] = [];
+                return draft;
+              });
+              setNewName("");
+            }}
+          >
+            <Plus className="h-4 w-4" aria-hidden="true" />
+            添加
+          </button>
         </div>
-        <Button variant="filled" onClick={() => onUpdate((d) => {
-          if (!activeCategory || !d[activeCategory]) return d;
-          if (Object.keys(d).length <= 1) throw new Error("至少保留一个分类");
-          delete d[activeCategory]; return d;
-        })} className="!bg-md-error-container !text-md-on-error-container">
+        <div className="flex gap-2">
+          <input
+            value={renameName}
+            onChange={(event) => setRenameName(event.target.value)}
+            placeholder="重命名"
+            className="paper-input min-h-9 flex-1 py-2 text-sm"
+          />
+          <button
+            type="button"
+            className="paper-button secondary px-3 text-sm"
+            onClick={() => {
+              const nextName = renameName.trim();
+              onUpdate((draft) => {
+                if (!nextName || !activeCategory) throw new Error("请输入新的分类名");
+                if (!draft[activeCategory]) return draft;
+                if (nextName !== activeCategory && draft[nextName]) {
+                  throw new Error("目标分类名已存在");
+                }
+
+                const entries = Object.entries(draft).map(([key, value]) =>
+                  key === activeCategory ? ([nextName, value] as [string, typeof value]) : ([key, value] as [string, typeof value])
+                );
+                onSetActive(nextName);
+                return Object.fromEntries(entries);
+              });
+            }}
+          >
+            <Pencil className="h-4 w-4" aria-hidden="true" />
+            重命名
+          </button>
+        </div>
+        <button
+          type="button"
+          className="paper-button danger"
+          disabled={!activeCategory || Object.keys(categories).length <= 1}
+          onClick={() => {
+            if (!activeCategory) return;
+            onRequestDeleteCategory(activeCategory);
+          }}
+        >
+          <Trash2 className="h-4 w-4" aria-hidden="true" />
           删除当前分类
-        </Button>
+        </button>
       </div>
-    </Card>
+    </section>
   );
 }

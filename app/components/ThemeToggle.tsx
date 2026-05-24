@@ -1,31 +1,56 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useTheme } from "./DarkModeProvider";
+import { Monitor, Moon, Sun } from "lucide-react";
+import { useTheme } from "next-themes";
+
+const themeOptions = [
+  { value: "system", label: "跟随系统", Icon: Monitor },
+  { value: "light", label: "浅色模式", Icon: Sun },
+  { value: "dark", label: "深色模式", Icon: Moon },
+] as const;
 
 export default function ThemeToggle() {
-  const { theme, toggleTheme } = useTheme();
+  const { theme, resolvedTheme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
-  useEffect(() => { setMounted(true); }, []);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
-  if (!mounted) { return <div className="w-10 h-10" />; }
+  const activeTheme = mounted ? theme || "system" : "system";
 
   return (
-    <button
-      onClick={toggleTheme}
-      className="md3-state-layer h-10 w-10 flex items-center justify-center rounded-md3-full text-md-on-surface-variant transition-colors active:scale-90"
-      aria-label="Toggle Dark Mode"
+    <div
+      className="inline-flex shrink-0 rounded-md border border-paper-border bg-ivory/70 p-0.5"
+      role="group"
+      aria-label="主题"
     >
-      {theme === "dark" ? (
-        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-          <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-        </svg>
-      ) : (
-        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-          <path strokeLinecap="round" strokeLinejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-        </svg>
-      )}
-    </button>
+      {themeOptions.map(({ value, label, Icon }) => {
+        const isActive = activeTheme === value;
+        const currentLabel =
+          value === "system" && mounted
+            ? `${label}，当前${resolvedTheme === "dark" ? "深色" : "浅色"}`
+            : label;
+
+        return (
+          <button
+            key={value}
+            type="button"
+            aria-label={currentLabel}
+            aria-pressed={mounted ? isActive : undefined}
+            title={currentLabel}
+            className={`flex h-8 w-8 items-center justify-center rounded transition-colors ${
+              isActive
+                ? "bg-ink text-ivory"
+                : "text-stone hover:bg-ink-tint hover:text-ink"
+            }`}
+            onClick={() => setTheme(value)}
+          >
+            <Icon className="h-4 w-4" aria-hidden="true" />
+          </button>
+        );
+      })}
+    </div>
   );
 }

@@ -1,5 +1,3 @@
-import { ReactNode } from "react";
-
 export interface LinkItem {
   name: string;
   url: string;
@@ -18,11 +16,16 @@ export const SearchEngines = [
 ];
 
 export const Categories: CategoryMap = {
-  "常用": [
-    { "name": "GitHub", "url": "https://github.com" },
-    { "name": "Vercel", "url": "https://vercel.com" }
+  常用: [
+    { name: "GitHub", url: "https://github.com" },
+    { name: "Vercel", url: "https://vercel.com" },
+    { name: "OpenAI", url: "https://openai.com" },
   ],
-  "学习": [
-    { "name": "ArXiv", "url": "https://arxiv.org" }
-  ]
-}
+  学习: [
+    { name: "MDN Web Docs", url: "https://developer.mozilla.org" },
+    { name: "ArXiv", url: "https://arxiv.org" },
+  ],
+  工具: [
+    { name: "Next.js", url: "https://nextjs.org" },
+  ],
+};

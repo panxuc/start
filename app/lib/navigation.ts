@@ -1,15 +1,16 @@
 import { Categories, type CategoryMap, type LinkItem } from "../config";
 
-const BLOB_URL_ENV_KEY = "NAVIGATION_BLOB_URL";
-const BLOB_RW_TOKEN_ENV_KEY = "BLOB_READ_WRITE_TOKEN";
-const BLOB_PATH_ENV_KEY = "NAVIGATION_BLOB_PATH";
-const DEFAULT_BLOB_PATH = "navigation.json";
+export function cloneCategories(categories: CategoryMap): CategoryMap {
+  return Object.fromEntries(
+    Object.entries(categories).map(([categoryName, links]) => [
+      categoryName,
+      links.map((link) => ({ ...link })),
+    ])
+  );
+}
 
-function encodePath(pathname: string): string {
-  return pathname
-    .split("/")
-    .map((segment) => encodeURIComponent(segment))
-    .join("/");
+export function fallbackNavigation(): CategoryMap {
+  return cloneCategories(Categories);
 }
 
 export function isLinkItem(value: unknown): value is LinkItem {
@@ -29,55 +30,63 @@ export function isCategoryMap(value: unknown): value is CategoryMap {
   return Object.values(value).every((links) => Array.isArray(links) && links.every(isLinkItem));
 }
 
-export async function loadNavigation(): Promise<{ categories: CategoryMap; source: string }> {
-  const blobUrl = process.env[BLOB_URL_ENV_KEY];
+export function normalizeLink(link: LinkItem): LinkItem {
+  const normalized: LinkItem = {
+    name: link.name.trim(),
+    url: link.url.trim(),
+  };
 
-  if (blobUrl) {
-    try {
-      const response = await fetch(blobUrl, { cache: "no-store" });
-      if (response.ok) {
-        const data = await response.json();
-        if (isCategoryMap(data) && Object.keys(data).length > 0) {
-          return { categories: data, source: "blob" };
-        }
-      }
-    } catch (error) {
-      console.error("Failed to load navigation from Blob:", error);
-    }
+  if (link.icon && typeof link.icon === "string" && link.icon.trim()) {
+    normalized.icon = link.icon.trim();
   }
 
-  return { categories: Categories, source: "fallback-config" };
+  return normalized;
 }
 
-export async function saveNavigation(categories: CategoryMap): Promise<{ url: string }> {
-  const token = process.env[BLOB_RW_TOKEN_ENV_KEY];
-  if (!token) {
-    throw new Error(`Missing ${BLOB_RW_TOKEN_ENV_KEY}`);
+export function validateHttpUrl(url: string): boolean {
+  try {
+    const parsed = new URL(url);
+    return parsed.protocol === "http:" || parsed.protocol === "https:";
+  } catch {
+    return false;
+  }
+}
+
+export function validateCategoryMap(categories: CategoryMap): CategoryMap {
+  const normalizedEntries: Array<[string, LinkItem[]]> = [];
+  const seenCategories = new Set<string>();
+  const seenUrls = new Set<string>();
+
+  for (const [rawCategoryName, links] of Object.entries(categories)) {
+    const categoryName = rawCategoryName.trim();
+    if (!categoryName) {
+      throw new Error("分类名不能为空。");
+    }
+
+    if (seenCategories.has(categoryName)) {
+      throw new Error(`分类名重复：${categoryName}`);
+    }
+    seenCategories.add(categoryName);
+
+    const normalizedLinks = links.map((link) => {
+      const normalized = normalizeLink(link);
+      if (!normalized.name || !validateHttpUrl(normalized.url)) {
+        throw new Error(`“${categoryName}”中存在无效网址，名称不能为空，URL 必须以 http(s) 开头。`);
+      }
+
+      if (seenUrls.has(normalized.url)) {
+        throw new Error(`存在重复网址：${normalized.url}`);
+      }
+      seenUrls.add(normalized.url);
+      return normalized;
+    });
+
+    normalizedEntries.push([categoryName, normalizedLinks]);
   }
 
-  const pathname = process.env[BLOB_PATH_ENV_KEY] || DEFAULT_BLOB_PATH;
-  const encodedPath = encodePath(pathname);
-  const response = await fetch(`https://blob.vercel-storage.com/${encodedPath}`, {
-    method: "PUT",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      "content-type": "application/json; charset=utf-8",
-      "x-content-type": "application/json; charset=utf-8",
-      "x-add-random-suffix": "0",
-    },
-    body: JSON.stringify(categories, null, 2),
-    cache: "no-store",
-  });
-
-  if (!response.ok) {
-    const body = await response.text();
-    throw new Error(`Blob write failed (${response.status}): ${body}`);
+  if (!normalizedEntries.length) {
+    throw new Error("至少保留一个分类。");
   }
 
-  const result = (await response.json()) as { url?: string };
-  if (!result.url) {
-    throw new Error("Blob write response missing url");
-  }
-
-  return { url: result.url };
+  return Object.fromEntries(normalizedEntries);
 }

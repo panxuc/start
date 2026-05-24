@@ -1,0 +1,40 @@
+name: 问题反馈
+description: 报告一个无法正常工作的行为
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: dropdown
+    id: deployment
+    attributes:
+      label: 部署模式
+      options:
+        - Vercel Blob
+        - 本地文件
+        - 只读配置
+        - 不确定
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: 复现步骤
+      description: 你做了哪些操作？
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: 预期行为
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: 实际行为
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Node、pnpm 和浏览器版本
+      placeholder: "Node 20, pnpm 11, Chrome 126"

@@ -1,0 +1,14 @@
+.git
+.github
+.next
+.vercel
+node_modules
+coverage
+npm-debug.log*
+pnpm-debug.log*
+.env
+.env.*
+!.env.example
+*.pem
+*.tsbuildinfo
+.DS_Store
