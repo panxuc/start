@@ -88,5 +88,13 @@ export async function GET(request: NextRequest) {
     }
   }
 
-  return NextResponse.json({ error: "Icon not found" }, { status: 404 });
+  return NextResponse.json(
+    { error: "Icon not found" },
+    {
+      status: 404,
+      headers: {
+        "Cache-Control": "public, max-age=86400, s-maxage=604800, stale-while-revalidate=86400",
+      },
+    }
+  );
 }

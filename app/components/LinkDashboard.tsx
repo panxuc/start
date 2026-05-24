@@ -1,78 +1,169 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Categories, type CategoryMap } from "../config";
+/* eslint-disable @next/next/no-img-element */
 
-const cardVariants = {
-  hidden: { opacity: 0, y: 12, scale: 0.96 },
-  visible: { opacity: 1, y: 0, scale: 1 },
+import { useEffect, useMemo, useRef, useState } from "react";
+import type { ReactNode } from "react";
+import { Search, X } from "lucide-react";
+import { pinyin } from "pinyin-pro";
+import { Categories, type CategoryMap, type LinkItem } from "../config";
+
+const failedIconHosts = new Set<string>();
+
+function getHostname(url: string): string {
+  try {
+    return new URL(url).hostname;
+  } catch {
+    return "";
+  }
+}
+
+function normalizedText(value: string): string {
+  return value.trim().toLowerCase();
+}
+
+function compactText(value: string): string {
+  return normalizedText(value).replace(/\s+/g, "");
+}
+
+function toPinyin(value: string, pattern?: "first"): string {
+  const source = value.trim();
+  if (!source) return "";
+
+  return pinyin(source, {
+    pattern,
+    toneType: "none",
+  }).toLowerCase();
+}
+
+function HighlightText({ text, query }: { text: string; query: string }) {
+  const normalizedQuery = normalizedText(query);
+  if (!normalizedQuery) return <>{text}</>;
+
+  const source = text;
+  const sourceLower = source.toLowerCase();
+  const parts: ReactNode[] = [];
+  let cursor = 0;
+  let index = sourceLower.indexOf(normalizedQuery);
+
+  while (index >= 0) {
+    if (index > cursor) {
+      parts.push(source.slice(cursor, index));
+    }
+    const match = source.slice(index, index + normalizedQuery.length);
+    parts.push(
+      <mark key={`${index}-${match}`} className="rounded bg-ink-tint px-0.5 text-ink">
+        {match}
+      </mark>
+    );
+    cursor = index + normalizedQuery.length;
+    index = sourceLower.indexOf(normalizedQuery, cursor);
+  }
+
+  if (cursor < source.length) {
+    parts.push(source.slice(cursor));
+  }
+
+  return <>{parts}</>;
+}
+
+type CategorizedLink = LinkItem & {
+  category: string;
 };
 
-const Favicon = ({ url, name }: { url: string; name: string }) => {
-  const [error, setError] = useState(false);
-  const [sourceIndex, setSourceIndex] = useState(0);
-  let hostname = "";
-  try { hostname = new URL(url).hostname; } catch {}
+type SearchRecord = {
+  link: CategorizedLink;
+  text: string;
+  compact: string;
+};
 
-  const iconSources = useMemo(
-    () => hostname
-      ? [
-        `/api/favicon?domain=${encodeURIComponent(hostname)}&size=64`,
-        `https://icons.duckduckgo.com/ip3/${encodeURIComponent(hostname)}.ico`,
-      ]
-      : [],
-    [hostname]
-  );
+function buildSearchRecord(link: CategorizedLink): SearchRecord {
+  const hostname = getHostname(link.url).replace(/^www\./, "");
+  const literalText = `${link.category} ${link.name} ${link.url} ${hostname}`;
+  const pinyinSource = `${link.category} ${link.name}`;
+  const fullPinyin = toPinyin(pinyinSource);
+  const firstLetters = toPinyin(pinyinSource, "first");
+  const text = normalizedText(`${literalText} ${fullPinyin} ${firstLetters}`);
+
+  return {
+    link,
+    text,
+    compact: compactText(text),
+  };
+}
+
+const Favicon = ({ url, name }: { url: string; name: string }) => {
+  const hostname = useMemo(() => getHostname(url), [url]);
+  const [failed, setFailed] = useState(() => !hostname || failedIconHosts.has(hostname));
+  const [loaded, setLoaded] = useState(false);
+  const imageRef = useRef<HTMLImageElement>(null);
 
   useEffect(() => {
-    setError(false);
-    setSourceIndex(0);
-  }, [url]);
+    setLoaded(false);
+    setFailed(!hostname || failedIconHosts.has(hostname));
+  }, [hostname, url]);
 
-  const iconUrl = iconSources[sourceIndex];
-
-  const handleImageError = () => {
-    if (sourceIndex < iconSources.length - 1) {
-      setSourceIndex((prev) => prev + 1);
-    } else {
-      setError(true);
+  useEffect(() => {
+    if (failed || !hostname) return;
+    const image = imageRef.current;
+    if (image?.complete && image.naturalWidth > 0) {
+      setLoaded(true);
     }
-  };
+  }, [failed, hostname]);
+
+  const iconUrl = hostname ? `/api/favicon?domain=${encodeURIComponent(hostname)}&size=64` : "";
+  const fallbackLetter = name.slice(0, 1).toUpperCase();
 
   return (
-    <div className="w-12 h-12 rounded-md3-md bg-md-surface-container flex items-center justify-center overflow-hidden shrink-0">
-      {!error && hostname && iconUrl ? (
+    <span className="relative flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-md border border-paper-border bg-ivory text-sm font-semibold text-ink">
+      <span
+        aria-hidden="true"
+        className={`transition-opacity ${loaded && !failed ? "opacity-0" : "opacity-100"}`}
+      >
+        {loaded && !failed ? null : fallbackLetter}
+      </span>
+      {!failed && hostname && iconUrl && (
         <img
+          ref={imageRef}
           src={iconUrl}
-          alt={name}
-          className="w-7 h-7 object-contain"
-          onError={handleImageError}
+          alt=""
+          className={`absolute h-7 w-7 object-contain transition-opacity ${
+            loaded ? "opacity-100" : "opacity-0"
+          }`}
+          onLoad={(event) => {
+            if (event.currentTarget.naturalWidth > 0) {
+              setLoaded(true);
+            }
+          }}
+          onError={() => {
+            failedIconHosts.add(hostname);
+            setFailed(true);
+          }}
           loading="lazy"
           decoding="async"
           referrerPolicy="no-referrer"
         />
-      ) : (
-        <span className="text-sm font-medium text-md-on-surface-variant">{name[0]}</span>
       )}
-    </div>
+    </span>
   );
 };
 
-/* ── Loading skeleton ── */
 function Skeleton() {
   return (
-    <div className="w-full max-w-5xl mx-auto flex flex-col gap-24dp">
-      <div className="flex gap-8dp overflow-hidden">
-        {Array.from({ length: 4 }).map((_, i) => (
-          <div key={i} className="shrink-0 h-8 w-20 rounded-md3-sm bg-md-surface-container-high animate-pulse" />
+    <div className="flex w-full flex-col gap-5">
+      <div className="flex flex-wrap gap-2">
+        {Array.from({ length: 4 }).map((_, index) => (
+          <div key={index} className="h-8 w-20 animate-pulse rounded bg-paper-border" />
         ))}
       </div>
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-12dp sm:gap-16dp">
-        {Array.from({ length: 10 }).map((_, i) => (
-          <div key={i} className="flex flex-col items-center p-16dp gap-12dp rounded-md3-md bg-md-surface-container-lowest shadow-md3-1">
-            <div className="w-12 h-12 rounded-md3-md bg-md-surface-container-high animate-pulse" />
-            <div className="h-4 w-16 rounded bg-md-surface-container-high animate-pulse" />
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        {Array.from({ length: 8 }).map((_, index) => (
+          <div key={index} className="paper-card flex items-center gap-3 p-4">
+            <div className="h-11 w-11 animate-pulse rounded-md bg-paper-border" />
+            <div className="min-w-0 flex-1 space-y-2">
+              <div className="h-4 w-24 animate-pulse rounded bg-paper-border" />
+              <div className="h-3 w-32 animate-pulse rounded bg-paper-border-soft" />
+            </div>
           </div>
         ))}
       </div>
@@ -83,111 +174,175 @@ function Skeleton() {
 export default function LinkDashboard() {
   const [categoryMap, setCategoryMap] = useState<CategoryMap>(Categories);
   const [loading, setLoading] = useState(true);
-  const categories = Object.keys(categoryMap);
-  const [activeCat, setActiveCat] = useState(categories[0] || "");
+  const categories = useMemo(() => Object.keys(categoryMap), [categoryMap]);
+  const [activeCategory, setActiveCategory] = useState(categories[0] || "");
+  const [quickFilter, setQuickFilter] = useState("");
+  const allLinks = useMemo(
+    () =>
+      Object.entries(categoryMap).flatMap(([category, links]) =>
+        links.map((link) => ({ ...link, category }))
+      ),
+    [categoryMap]
+  );
+  const searchRecords = useMemo(() => allLinks.map(buildSearchRecord), [allLinks]);
+  const filterText = normalizedText(quickFilter);
+  const compactFilterText = compactText(quickFilter);
+  const isFiltering = !!filterText;
+  const links = useMemo<CategorizedLink[]>(() => {
+    if (filterText) {
+      return searchRecords
+        .filter((record) => {
+          if (record.text.includes(filterText)) return true;
+          return !!compactFilterText && record.compact.includes(compactFilterText);
+        })
+        .map((record) => record.link);
+    }
+
+    return (categoryMap[activeCategory] ?? []).map((link) => ({
+      ...link,
+      category: activeCategory,
+    }));
+  }, [activeCategory, categoryMap, compactFilterText, filterText, searchRecords]);
 
   useEffect(() => {
-    const loadCategories = async () => {
+    const load = async () => {
       try {
-        const response = await fetch("/api/navigation", { cache: "no-store" });
-        if (!response.ok) return;
-        const data = await response.json();
-        const nextCategories = data?.categories;
-        if (!nextCategories || typeof nextCategories !== "object") return;
-        if (!Object.keys(nextCategories).length) return;
-        setCategoryMap(nextCategories as CategoryMap);
+        const res = await fetch("/api/navigation", { cache: "no-store" });
+        if (!res.ok) return;
+        const data = await res.json();
+        if (
+          data?.categories &&
+          typeof data.categories === "object" &&
+          Object.keys(data.categories).length
+        ) {
+          setCategoryMap(data.categories as CategoryMap);
+        }
       } catch (error) {
         console.error("Failed to fetch categories:", error);
       } finally {
         setLoading(false);
       }
     };
-    loadCategories();
+
+    load();
   }, []);
 
   useEffect(() => {
     if (!categories.length) {
-      if (activeCat) setActiveCat("");
+      if (activeCategory) setActiveCategory("");
       return;
     }
-    if (!activeCat || !categoryMap[activeCat]) {
-      setActiveCat(categories[0]);
+
+    if (!activeCategory || !categoryMap[activeCategory]) {
+      setActiveCategory(categories[0]);
     }
-  }, [activeCat, categories, categoryMap]);
+  }, [activeCategory, categories, categoryMap]);
 
   if (loading) return <Skeleton />;
-  if (!categories.length || !activeCat) return null;
+  if (!categories.length || !activeCategory) return null;
 
-  const links = categoryMap[activeCat] ?? [];
+  const resultLabel = isFiltering
+    ? `找到 ${links.length} 条网址`
+    : `${activeCategory} · ${links.length} 条`;
 
   return (
-    <div className="w-full max-w-5xl mx-auto flex flex-col gap-24dp">
-      {/* ── MD3 Filter Chips (category selector) ── */}
-      <div className="flex flex-wrap gap-8dp justify-center">
-        {categories.map((cat) => {
-          const isActive = activeCat === cat;
-          return (
+    <section className="flex w-full flex-col gap-4">
+      <div className="mx-auto w-full max-w-2xl">
+        <div className="flex h-11 items-center gap-2 rounded-md border border-paper-border-soft bg-ivory/75 px-3 transition-colors focus-within:border-ink/50 focus-within:bg-ivory">
+          <Search className="h-4 w-4 shrink-0 text-stone" aria-hidden="true" />
+          <input
+            value={quickFilter}
+            onChange={(event) => setQuickFilter(event.target.value)}
+            onKeyDown={(event) => {
+              if (event.key === "Escape") {
+                setQuickFilter("");
+              }
+            }}
+            placeholder="筛选已收录网址"
+            aria-label="筛选已收录网址，支持中文、拼音、网址"
+            className="min-w-0 flex-1 bg-transparent py-2 text-sm leading-5 text-near-black outline-none placeholder:text-stone"
+          />
+          <div className="hidden shrink-0 text-right text-xs font-medium leading-5 text-stone sm:block">
+            {resultLabel}
+          </div>
+          {isFiltering && (
             <button
-              key={cat}
               type="button"
-              onClick={() => setActiveCat(cat)}
-              className={`
-                md3-state-layer shrink-0 h-8 px-16dp flex items-center gap-1.5
-                rounded-md3-sm border text-[0.75rem] font-medium tracking-[0.5px]
-                transition-all duration-md3-s4 ease-md3-standard
-                ${isActive
-                  ? "bg-md-secondary-container text-md-on-secondary-container border-transparent"
-                  : "bg-transparent text-md-on-surface-variant border-md-outline hover:bg-md-surface-container-high"}
-              `}
+              aria-label="清除筛选"
+              title="清除筛选"
+              className="paper-button ghost h-7 min-h-0 w-7 shrink-0 px-0 py-0"
+              onClick={() => setQuickFilter("")}
             >
-              {isActive && (
-                <svg className="w-[18px] h-[18px] shrink-0" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
-                </svg>
-              )}
-              {cat}
+              <X className="h-4 w-4" aria-hidden="true" />
             </button>
-          );
-        })}
+          )}
+        </div>
       </div>
 
-      {/* ── MD3 Elevated Cards Grid ── */}
-      <div className="min-h-[300px]">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activeCat}
-            initial="hidden"
-            animate="visible"
-            exit="hidden"
-            transition={{ staggerChildren: 0.03, delayChildren: 0.05 }}
-            className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-12dp sm:gap-16dp"
-          >
-            {links.map((link) => (
-              <motion.a
-                key={link.url}
-                href={link.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                variants={cardVariants}
-                transition={{ duration: 0.25, ease: [0.2, 0, 0, 1] }}
-                whileHover={{ y: -2 }}
-                whileTap={{ scale: 0.97 }}
-                className="
-                  flex flex-col items-center p-16dp gap-12dp
-                  rounded-md3-md bg-md-surface-container-lowest
-                  shadow-md3-1 hover:shadow-md3-2
-                  transition-shadow duration-md3-s4 ease-md3-standard
-                "
+      <div className="-mx-3 overflow-x-auto px-3 sm:mx-0 sm:overflow-visible sm:px-0">
+        <div className="flex w-max items-center gap-2 sm:w-auto sm:flex-wrap">
+          {categories.map((category) => {
+            const isActive = activeCategory === category && !isFiltering;
+            return (
+              <button
+                key={category}
+                type="button"
+                aria-pressed={isActive}
+                onClick={() => {
+                  setActiveCategory(category);
+                  setQuickFilter("");
+                }}
+                className={`shrink-0 rounded px-3 py-1.5 text-sm font-medium transition-colors ${
+                  isActive
+                    ? "bg-ink text-ivory"
+                    : "bg-transparent text-olive hover:bg-ink-tint hover:text-ink"
+                }`}
               >
-                <Favicon url={link.url} name={link.name} />
-                <span className="text-[0.875rem] font-medium text-md-on-surface truncate w-full text-center leading-tight">
-                  {link.name}
-                </span>
-              </motion.a>
-            ))}
-          </motion.div>
-        </AnimatePresence>
+                {category}
+              </button>
+            );
+          })}
+        </div>
       </div>
-    </div>
+
+      {links.length === 0 ? (
+        <div className="paper-card px-4 py-8 text-center text-sm text-stone">
+          没有匹配的网址
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        {links.map((link) => {
+          const hostname = getHostname(link.url).replace(/^www\./, "");
+
+          return (
+            <a
+              key={`${link.category}-${link.url}`}
+              href={link.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="paper-card group flex min-h-[82px] items-center gap-3 p-4 transition hover:-translate-y-0.5 hover:border-ink/40 hover:shadow-paper"
+            >
+              <Favicon url={link.url} name={link.name} />
+              <span className="min-w-0">
+                <span className="block truncate text-[0.98rem] font-semibold leading-snug text-near-black group-hover:text-ink">
+                  <HighlightText text={link.name} query={quickFilter} />
+                </span>
+                <span className="mt-1 flex min-w-0 items-center gap-2">
+                  {isFiltering && (
+                    <span className="shrink-0 rounded bg-ink-tint px-1.5 py-0.5 text-[0.68rem] leading-none text-ink">
+                      <HighlightText text={link.category} query={quickFilter} />
+                    </span>
+                  )}
+                  <span className="block truncate font-mono text-xs leading-snug text-stone">
+                    <HighlightText text={hostname || link.url} query={quickFilter} />
+                  </span>
+                </span>
+              </span>
+            </a>
+          );
+        })}
+        </div>
+      )}
+    </section>
   );
 }

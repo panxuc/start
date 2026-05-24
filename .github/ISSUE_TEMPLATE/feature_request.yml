@@ -1,0 +1,30 @@
+name: 功能建议
+description: 提出一个改进想法
+title: "[Feature]: "
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: 问题或场景
+      description: 这个建议想改善什么工作流？
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: 建议方案
+      description: 你希望它如何工作？
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: 影响区域
+      options:
+        - 公开页
+        - 后台
+        - 存储
+        - 部署
+        - 文档
+        - 其他

@@ -1,10 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import {
   isSiteSettings,
-  loadSiteSettings,
   normalizeSiteSettings,
-  saveSiteSettings,
 } from "../../../lib/site-settings";
+import { loadSiteSettings, saveSiteSettings } from "../../../lib/site-settings-store";
 
 const ADMIN_TOKEN_ENV_KEY = "NAVIGATION_ADMIN_TOKEN";
 
@@ -63,15 +62,17 @@ export async function PUT(request: NextRequest) {
 
   try {
     const normalized = normalizeSiteSettings(payload);
-    const { url } = await saveSiteSettings(normalized);
+    const saved = await saveSiteSettings(normalized);
     return NextResponse.json({
       ok: true,
-      source: "blob",
-      blobUrl: url,
+      source: saved.source,
+      blobUrl: saved.url,
+      filePath: saved.path,
       settings: normalized,
     });
   } catch (error) {
     const message = error instanceof Error ? error.message : "Failed to write site settings";
-    return NextResponse.json({ error: message }, { status: 500 });
+    const status = /只读配置|START_STORAGE_DRIVER|BLOB_READ_WRITE_TOKEN/.test(message) ? 400 : 500;
+    return NextResponse.json({ error: message }, { status });
   }
 }

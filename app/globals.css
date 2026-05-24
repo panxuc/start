@@ -2,207 +2,229 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ═══════════════════════════════════════════
-   Material Design 3 — Complete Token System
-   Seed color: #6750A4
-   ═══════════════════════════════════════════ */
-
-/* ── Light Theme ── */
 :root {
-  /* Primary */
-  --md-sys-color-primary: #6750A4;
-  --md-sys-color-on-primary: #FFFFFF;
-  --md-sys-color-primary-container: #EADDFF;
-  --md-sys-color-on-primary-container: #21005D;
-  /* Secondary */
-  --md-sys-color-secondary: #625B71;
-  --md-sys-color-on-secondary: #FFFFFF;
-  --md-sys-color-secondary-container: #E8DEF8;
-  --md-sys-color-on-secondary-container: #1D192B;
-  /* Tertiary */
-  --md-sys-color-tertiary: #7D5260;
-  --md-sys-color-on-tertiary: #FFFFFF;
-  --md-sys-color-tertiary-container: #FFD8E4;
-  --md-sys-color-on-tertiary-container: #31111D;
-  /* Error */
-  --md-sys-color-error: #B3261E;
-  --md-sys-color-on-error: #FFFFFF;
-  --md-sys-color-error-container: #F9DEDC;
-  --md-sys-color-on-error-container: #410E0B;
-  /* Surface */
-  --md-sys-color-surface: #FEF7FF;
-  --md-sys-color-on-surface: #1D1B20;
-  --md-sys-color-surface-variant: #E7E0EC;
-  --md-sys-color-on-surface-variant: #49454F;
-  --md-sys-color-surface-dim: #DED8E1;
-  --md-sys-color-surface-bright: #FEF7FF;
-  --md-sys-color-surface-container-lowest: #FFFFFF;
-  --md-sys-color-surface-container-low: #F7F2FA;
-  --md-sys-color-surface-container: #F3EDF7;
-  --md-sys-color-surface-container-high: #ECE6F0;
-  --md-sys-color-surface-container-highest: #E6E0E9;
-  /* Outline */
-  --md-sys-color-outline: #79747E;
-  --md-sys-color-outline-variant: #CAC4D0;
-  /* Inverse */
-  --md-sys-color-inverse-surface: #322F35;
-  --md-sys-color-inverse-on-surface: #F5EFF7;
-  --md-sys-color-inverse-primary: #D0BCFF;
-  /* Background */
-  --md-sys-color-background: #FEF7FF;
-  --md-sys-color-on-background: #1D1B20;
-  /* Scrim & Shadow */
-  --md-sys-color-scrim: #000000;
-  --md-sys-color-shadow: #000000;
+  color-scheme: light;
+  --kami-parchment: #f5f4ed;
+  --kami-ivory: #faf9f5;
+  --kami-border: #e8e6dc;
+  --kami-border-soft: #e5e3d8;
+  --kami-brand: #1b365d;
+  --kami-brand-light: #2d5a8a;
+  --kami-brand-tint: #eef2f7;
+  --kami-tag-bg: #e4ecf5;
+  --kami-near-black: #141413;
+  --kami-dark-warm: #3d3d3a;
+  --kami-olive: #504e49;
+  --kami-stone: #6b6a64;
+  --kami-danger-bg: #f0e0d8;
+  --kami-danger-fg: #8b4513;
+  --kami-shadow: 0 10px 30px rgba(20, 19, 19, 0.08);
+  --kami-card-shadow: 0 8px 24px rgba(20, 19, 19, 0.06);
+  --kami-body-sheen: linear-gradient(180deg, rgba(250, 249, 245, 0.74), rgba(245, 244, 237, 0) 360px);
+  --kami-input-bg: rgba(250, 249, 245, 0.92);
+  --kami-input-focus-bg: var(--kami-ivory);
+  --kami-serif: var(--font-noto-serif-sc), "TsangerJinKai02", "Source Han Serif SC", "Noto Serif CJK SC", "Songti SC", Georgia, serif;
+  --kami-mono: "JetBrains Mono", "Fira Code", "SF Mono", Consolas, Monaco, monospace;
 }
 
-/* ── Dark Theme ── */
 .dark {
-  --md-sys-color-primary: #D0BCFF;
-  --md-sys-color-on-primary: #381E72;
-  --md-sys-color-primary-container: #4F378B;
-  --md-sys-color-on-primary-container: #EADDFF;
-  --md-sys-color-secondary: #CCC2DC;
-  --md-sys-color-on-secondary: #332D41;
-  --md-sys-color-secondary-container: #4A4458;
-  --md-sys-color-on-secondary-container: #E8DEF8;
-  --md-sys-color-tertiary: #EFB8C8;
-  --md-sys-color-on-tertiary: #492532;
-  --md-sys-color-tertiary-container: #633B48;
-  --md-sys-color-on-tertiary-container: #FFD8E4;
-  --md-sys-color-error: #F2B8B5;
-  --md-sys-color-on-error: #601410;
-  --md-sys-color-error-container: #8C1D18;
-  --md-sys-color-on-error-container: #F9DEDC;
-  --md-sys-color-surface: #141218;
-  --md-sys-color-on-surface: #E6E0E9;
-  --md-sys-color-surface-variant: #49454F;
-  --md-sys-color-on-surface-variant: #CAC4D0;
-  --md-sys-color-surface-dim: #141218;
-  --md-sys-color-surface-bright: #3B383E;
-  --md-sys-color-surface-container-lowest: #0F0D13;
-  --md-sys-color-surface-container-low: #1D1B20;
-  --md-sys-color-surface-container: #211F26;
-  --md-sys-color-surface-container-high: #2B2930;
-  --md-sys-color-surface-container-highest: #36343B;
-  --md-sys-color-outline: #938F99;
-  --md-sys-color-outline-variant: #49454F;
-  --md-sys-color-inverse-surface: #E6E0E9;
-  --md-sys-color-inverse-on-surface: #322F35;
-  --md-sys-color-inverse-primary: #6750A4;
-  --md-sys-color-background: #141218;
-  --md-sys-color-on-background: #E6E0E9;
-  --md-sys-color-scrim: #000000;
-  --md-sys-color-shadow: #000000;
+  color-scheme: dark;
+  --kami-parchment: #12110f;
+  --kami-ivory: #1b1a17;
+  --kami-border: #343028;
+  --kami-border-soft: #2b2822;
+  --kami-brand: #a9c7f0;
+  --kami-brand-light: #c5d9f6;
+  --kami-brand-tint: #213043;
+  --kami-tag-bg: #22364c;
+  --kami-near-black: #f3efe6;
+  --kami-dark-warm: #ddd5c8;
+  --kami-olive: #c9c0b2;
+  --kami-stone: #a99f91;
+  --kami-danger-bg: #3d271f;
+  --kami-danger-fg: #f1b289;
+  --kami-shadow: 0 12px 34px rgba(0, 0, 0, 0.36);
+  --kami-card-shadow: 0 8px 24px rgba(0, 0, 0, 0.24);
+  --kami-body-sheen: linear-gradient(180deg, rgba(42, 38, 31, 0.72), rgba(18, 17, 15, 0) 360px);
+  --kami-input-bg: rgba(24, 23, 20, 0.92);
+  --kami-input-focus-bg: #211f1b;
 }
 
-/* ═══════════════════════════════════════════
-   MD3 Shape Tokens
-   ═══════════════════════════════════════════ */
-:root {
-  --md-sys-shape-none: 0px;
-  --md-sys-shape-xs: 4px;
-  --md-sys-shape-sm: 8px;
-  --md-sys-shape-md: 12px;
-  --md-sys-shape-lg: 16px;
-  --md-sys-shape-xl: 28px;
-  --md-sys-shape-xxl: 32px;
-  --md-sys-shape-full: 9999px;
+* {
+  box-sizing: border-box;
 }
 
-/* ═══════════════════════════════════════════
-   MD3 Elevation (tonal + shadow)
-   ═══════════════════════════════════════════ */
-:root {
-  --md-sys-elevation-0: none;
-  --md-sys-elevation-1: 0 1px 2px rgba(0,0,0,0.3), 0 1px 3px 1px rgba(0,0,0,0.15);
-  --md-sys-elevation-2: 0 1px 2px rgba(0,0,0,0.3), 0 2px 6px 2px rgba(0,0,0,0.15);
-  --md-sys-elevation-3: 0 4px 8px 3px rgba(0,0,0,0.15), 0 1px 3px rgba(0,0,0,0.3);
-  --md-sys-elevation-4: 0 6px 10px 4px rgba(0,0,0,0.15), 0 2px 3px rgba(0,0,0,0.3);
-  --md-sys-elevation-5: 0 8px 12px 6px rgba(0,0,0,0.15), 0 4px 4px rgba(0,0,0,0.3);
+html {
+  min-height: 100%;
+  background: var(--kami-parchment);
 }
 
-/* ═══════════════════════════════════════════
-   MD3 Motion Tokens
-   ═══════════════════════════════════════════ */
-:root {
-  --md-sys-motion-easing-emphasized: cubic-bezier(0.2, 0, 0, 1);
-  --md-sys-motion-easing-emphasized-decelerate: cubic-bezier(0.05, 0.7, 0.1, 1);
-  --md-sys-motion-easing-emphasized-accelerate: cubic-bezier(0.3, 0, 0.8, 0.15);
-  --md-sys-motion-easing-standard: cubic-bezier(0.2, 0, 0, 1);
-  --md-sys-motion-easing-standard-decelerate: cubic-bezier(0, 0, 0, 1);
-  --md-sys-motion-easing-standard-accelerate: cubic-bezier(0.3, 0, 1, 1);
-  --md-sys-motion-duration-short2: 100ms;
-  --md-sys-motion-duration-short3: 150ms;
-  --md-sys-motion-duration-short4: 200ms;
-  --md-sys-motion-duration-medium1: 250ms;
-  --md-sys-motion-duration-medium2: 300ms;
-  --md-sys-motion-duration-medium4: 400ms;
-  --md-sys-motion-duration-long2: 500ms;
-}
-
-/* ═══════════════════════════════════════════
-   MD3 Typography Scale
-   ═══════════════════════════════════════════ */
-:root {
-  --md-sys-typescale-display-large: 400 3.5625rem/4rem 'Roboto', sans-serif;
-  --md-sys-typescale-display-medium: 400 2.8125rem/3.25rem 'Roboto', sans-serif;
-  --md-sys-typescale-headline-large: 400 2rem/2.5rem 'Roboto', sans-serif;
-  --md-sys-typescale-headline-medium: 400 1.75rem/2.25rem 'Roboto', sans-serif;
-  --md-sys-typescale-headline-small: 400 1.5rem/2rem 'Roboto', sans-serif;
-  --md-sys-typescale-title-large: 400 1.375rem/1.75rem 'Roboto', sans-serif;
-  --md-sys-typescale-title-medium: 500 1rem/1.5rem 'Roboto', sans-serif;
-  --md-sys-typescale-title-small: 500 0.875rem/1.25rem 'Roboto', sans-serif;
-  --md-sys-typescale-body-large: 400 1rem/1.5rem 'Roboto', sans-serif;
-  --md-sys-typescale-body-medium: 400 0.875rem/1.25rem 'Roboto', sans-serif;
-  --md-sys-typescale-body-small: 400 0.75rem/1rem 'Roboto', sans-serif;
-  --md-sys-typescale-label-large: 500 0.875rem/1.25rem 'Roboto', sans-serif;
-  --md-sys-typescale-label-medium: 500 0.75rem/1rem 'Roboto', sans-serif;
-  --md-sys-typescale-label-small: 500 0.6875rem/1rem 'Roboto', sans-serif;
-}
-
-/* ═══════════════════════════════════════════
-   Base Body Styles
-   ═══════════════════════════════════════════ */
 body {
-  font: var(--md-sys-typescale-body-large);
-  color: var(--md-sys-color-on-background);
-  background: var(--md-sys-color-background);
-  -webkit-font-smoothing: antialiased;
+  min-height: 100%;
+  margin: 0;
+  background: var(--kami-body-sheen), var(--kami-parchment);
+  color: var(--kami-near-black);
+  font-family: var(--kami-serif);
+  font-feature-settings: "kern" 1;
+  letter-spacing: 0;
   text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* ═══════════════════════════════════════════
-   MD3 State Layer System
-   Interactive elements get a semi-transparent
-   overlay on hover / focus / active states
-   ═══════════════════════════════════════════ */
-.md3-state-layer {
-  position: relative;
-  overflow: hidden;
-}
-.md3-state-layer::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: currentColor;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity var(--md-sys-motion-duration-short4) var(--md-sys-motion-easing-standard);
-}
-.md3-state-layer:hover::before {
-  opacity: 0.08;
-}
-.md3-state-layer:focus-visible::before {
-  opacity: 0.12;
-}
-.md3-state-layer:active::before {
-  opacity: 0.12;
+a {
+  color: inherit;
+  text-decoration: none;
 }
 
-/* ═══════════════════════════════════════════
-   Utilities
-   ═══════════════════════════════════════════ */
-.no-scrollbar::-webkit-scrollbar { display: none; }
-.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+button,
+input,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:disabled,
+input:disabled,
+select:disabled {
+  cursor: not-allowed;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--kami-brand) 18%, transparent);
+}
+
+:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--kami-brand) 42%, transparent);
+  outline-offset: 2px;
+}
+
+.paper-shell {
+  width: min(1120px, calc(100vw - 32px));
+  margin: 0 auto;
+}
+
+.paper-card {
+  background: color-mix(in srgb, var(--kami-ivory) 98%, transparent);
+  border: 1px solid var(--kami-border);
+  border-radius: 8px;
+  box-shadow: var(--kami-card-shadow);
+}
+
+.paper-input {
+  width: 100%;
+  min-height: 42px;
+  border: 1px solid var(--kami-border);
+  border-radius: 6px;
+  background: var(--kami-input-bg);
+  color: var(--kami-near-black);
+  padding: 9px 12px;
+  line-height: 1.45;
+  transition: border-color 0.16s ease, box-shadow 0.16s ease, background 0.16s ease;
+}
+
+.paper-input::placeholder {
+  color: color-mix(in srgb, var(--kami-stone) 72%, transparent);
+}
+
+.paper-input:focus {
+  border-color: color-mix(in srgb, var(--kami-brand) 52%, var(--kami-border));
+  background: var(--kami-input-focus-bg);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--kami-brand) 10%, transparent);
+  outline: none;
+}
+
+option {
+  background: var(--kami-ivory);
+  color: var(--kami-near-black);
+}
+
+.paper-button {
+  display: inline-flex;
+  min-height: 38px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 6px;
+  border: 1px solid var(--kami-brand);
+  background: var(--kami-brand);
+  color: var(--kami-ivory);
+  padding: 8px 14px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.2;
+  transition: background 0.16s ease, border-color 0.16s ease, color 0.16s ease, transform 0.16s ease;
+}
+
+.paper-button:hover {
+  background: var(--kami-brand-light);
+  border-color: var(--kami-brand-light);
+}
+
+.paper-button:active {
+  transform: translateY(1px);
+}
+
+.paper-button:disabled {
+  opacity: 0.44;
+  transform: none;
+}
+
+.paper-button.secondary {
+  border-color: var(--kami-border);
+  background: var(--kami-border-soft);
+  color: var(--kami-dark-warm);
+}
+
+.paper-button.secondary:hover {
+  border-color: color-mix(in srgb, var(--kami-brand) 28%, var(--kami-border));
+  background: color-mix(in srgb, var(--kami-brand) 8%, var(--kami-border-soft));
+}
+
+.paper-button.ghost {
+  border-color: transparent;
+  background: transparent;
+  color: var(--kami-brand);
+}
+
+.paper-button.ghost:hover {
+  border-color: color-mix(in srgb, var(--kami-brand) 22%, transparent);
+  background: color-mix(in srgb, var(--kami-brand) 8%, transparent);
+}
+
+.paper-button.danger {
+  border-color: var(--kami-danger-bg);
+  background: var(--kami-danger-bg);
+  color: var(--kami-danger-fg);
+}
+
+.paper-button.danger:hover {
+  border-color: color-mix(in srgb, var(--kami-danger-fg) 20%, var(--kami-danger-bg));
+  background: color-mix(in srgb, var(--kami-danger-fg) 8%, var(--kami-danger-bg));
+}
+
+.paper-tag {
+  border-radius: 4px;
+  background: var(--kami-tag-bg);
+  color: var(--kami-brand);
+  padding: 2px 8px;
+  font-size: 0.75rem;
+  line-height: 1.45;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+@media (max-width: 640px) {
+  .paper-shell {
+    width: min(100% - 24px, 1120px);
+  }
+}

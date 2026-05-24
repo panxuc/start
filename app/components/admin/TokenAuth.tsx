@@ -1,10 +1,10 @@
 "use client";
 
-import { Button, Card, TextField } from "../md3";
+import { RefreshCw, Save, Undo2 } from "lucide-react";
 
 interface TokenAuthProps {
   tokenInput: string;
-  setTokenInput: (v: string) => void;
+  setTokenInput: (value: string) => void;
   loading: boolean;
   canEdit: boolean;
   saving: boolean;
@@ -25,35 +25,50 @@ export default function TokenAuth({
   onSave,
   onDiscard,
 }: TokenAuthProps) {
+  const statusText = canEdit ? (isDirty ? "未保存" : "已同步") : "未加载";
+
   return (
-    <Card>
-      <div className="flex flex-col lg:flex-row gap-12dp lg:items-center">
-        <TextField
+    <section className="paper-card p-4">
+      <div className="flex flex-col gap-3 lg:flex-row lg:items-center">
+        <input
           type="password"
           value={tokenInput}
-          onChange={(e) => setTokenInput(e.target.value)}
+          onChange={(event) => setTokenInput(event.target.value)}
           placeholder="NAVIGATION_ADMIN_TOKEN"
-          className="flex-1"
+          className="paper-input flex-1 font-mono text-sm"
         />
-        <div className="flex gap-8dp flex-shrink-0">
-          <Button onClick={onLoad} disabled={loading}>
+        <div className="flex flex-wrap gap-2 lg:flex-shrink-0">
+          <button type="button" className="paper-button" onClick={onLoad} disabled={loading}>
+            <RefreshCw className={`h-4 w-4 ${loading ? "animate-spin" : ""}`} aria-hidden="true" />
             {loading ? "加载中..." : "加载"}
-          </Button>
-          <Button variant="filled-tonal" onClick={onSave} disabled={!canEdit || saving || !isDirty}>
+          </button>
+          <button
+            type="button"
+            className="paper-button secondary"
+            onClick={onSave}
+            disabled={!canEdit || saving || !isDirty}
+          >
+            <Save className="h-4 w-4" aria-hidden="true" />
             {saving ? "保存中..." : "保存"}
-          </Button>
-          <Button variant="outlined" onClick={onDiscard} disabled={!canEdit || saving || !isDirty}>
+          </button>
+          <button
+            type="button"
+            className="paper-button ghost"
+            onClick={onDiscard}
+            disabled={!canEdit || saving || !isDirty}
+          >
+            <Undo2 className="h-4 w-4" aria-hidden="true" />
             撤销
-          </Button>
+          </button>
         </div>
       </div>
-      <div className="mt-12dp text-[0.75rem] text-md-on-surface-variant flex items-center gap-12dp flex-wrap">
+      <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs leading-5 text-stone">
         <span>Token 仅保存在浏览器 LocalStorage</span>
-        <span>快捷键: Ctrl/Cmd+S 保存, Ctrl/Cmd+Enter 添加, Esc 撤销</span>
-        <span className={isDirty ? "text-md-error" : "text-md-primary"}>
-          {isDirty ? "未保存" : "已同步"}
+        <span>Ctrl/Cmd+S 保存，Esc 撤销</span>
+        <span className={isDirty ? "text-danger-fg" : canEdit ? "text-ink" : "text-stone"}>
+          {statusText}
         </span>
       </div>
-    </Card>
+    </section>
   );
 }
