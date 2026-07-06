@@ -49,6 +49,21 @@ export default async function Home() {
               {settings.beianText}
             </a>
           )}
+          {settings.gonganBeianText && (
+            <a
+              href={settings.gonganBeianUrl || "https://beian.mps.gov.cn/"}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 transition-colors hover:text-ink"
+            >
+              <img
+                src="/gongan-beian.png"
+                alt=""
+                className="h-3.5 w-3.5 object-contain"
+              />
+              {settings.gonganBeianText}
+            </a>
+          )}
         </div>
       </footer>
     </div>

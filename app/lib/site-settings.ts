@@ -4,6 +4,8 @@ export interface SiteSettings {
   copyrightText: string;
   beianText: string;
   beianUrl: string;
+  gonganBeianText: string;
+  gonganBeianUrl: string;
 }
 
 export const DEFAULT_SITE_SETTINGS: SiteSettings = {
@@ -12,6 +14,8 @@ export const DEFAULT_SITE_SETTINGS: SiteSettings = {
   copyrightText: "",
   beianText: "",
   beianUrl: "https://beian.miit.gov.cn/",
+  gonganBeianText: "",
+  gonganBeianUrl: "https://beian.mps.gov.cn/",
 };
 
 function asTrimmedString(value: unknown, fallback = ""): string {
@@ -48,7 +52,9 @@ export function isSiteSettings(value: unknown): value is SiteSettings {
     typeof target.faviconUrl === "string" &&
     typeof target.copyrightText === "string" &&
     typeof target.beianText === "string" &&
-    typeof target.beianUrl === "string"
+    typeof target.beianUrl === "string" &&
+    typeof target.gonganBeianText === "string" &&
+    typeof target.gonganBeianUrl === "string"
   );
 }
 
@@ -61,5 +67,7 @@ export function normalizeSiteSettings(value: unknown): SiteSettings {
     copyrightText: formatCopyright(normalizedCopyright || defaultCopyright()),
     beianText: asTrimmedString(source.beianText, DEFAULT_SITE_SETTINGS.beianText),
     beianUrl: asTrimmedString(source.beianUrl, DEFAULT_SITE_SETTINGS.beianUrl),
+    gonganBeianText: asTrimmedString(source.gonganBeianText, DEFAULT_SITE_SETTINGS.gonganBeianText),
+    gonganBeianUrl: asTrimmedString(source.gonganBeianUrl, DEFAULT_SITE_SETTINGS.gonganBeianUrl),
   };
 }

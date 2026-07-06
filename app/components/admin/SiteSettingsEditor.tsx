@@ -65,6 +65,17 @@ export default function SiteSettingsEditor({ settings, onUpdate }: SiteSettingsE
           onChange={(value) => onUpdate({ beianUrl: value })}
           className="md:col-span-2"
         />
+        <Field
+          label="公安备案号"
+          value={settings.gonganBeianText}
+          onChange={(value) => onUpdate({ gonganBeianText: value })}
+        />
+        <Field
+          label="公安备案链接"
+          value={settings.gonganBeianUrl}
+          onChange={(value) => onUpdate({ gonganBeianUrl: value })}
+          className="md:col-span-2"
+        />
       </div>
     </section>
   );

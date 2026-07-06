@@ -54,7 +54,7 @@ export async function PUT(request: NextRequest) {
     return NextResponse.json(
       {
         error:
-          "Invalid payload. Expected { siteName, faviconUrl, copyrightText, beianText, beianUrl } as strings.",
+          "Invalid payload. Expected { siteName, faviconUrl, copyrightText, beianText, beianUrl, gonganBeianText, gonganBeianUrl } as strings.",
       },
       { status: 400 }
     );

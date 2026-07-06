@@ -41,6 +41,8 @@ describe("local file storage", () => {
       copyrightText: "Example",
       beianText: "",
       beianUrl: "https://beian.miit.gov.cn/",
+      gonganBeianText: "",
+      gonganBeianUrl: "https://beian.mps.gov.cn/",
     });
     const loaded = await loadSiteSettings();
 

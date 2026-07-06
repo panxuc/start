@@ -137,7 +137,9 @@ docker compose up -d --build
   "faviconUrl": "/favicon.ico",
   "copyrightText": "你的名字",
   "beianText": "",
-  "beianUrl": "https://beian.miit.gov.cn/"
+  "beianUrl": "https://beian.miit.gov.cn/",
+  "gonganBeianText": "",
+  "gonganBeianUrl": "https://beian.mps.gov.cn/"
 }
 ```
 
